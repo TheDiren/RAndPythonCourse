@@ -64,13 +64,22 @@ For Linux
 
 
 
-In this script, we make use of following packages: reshape, ggplot2, lubridate, magrittr, car
+In this script, we make use of following packages: 
 
-You can install them using following command:
-
-```{r eval=FALSE}
-install.packages(c("reshape", "ggplot2", "lubridate", "magrittr", "car"))
-```
+- pangaear
+- dplyr
+- tidyr
+- stringr
+- lubridate
+- httr
+- worrms
+- knitr
+- magrittr
+- car
+- palmerpenguins
+- reshape
+- ggplot2
+- (reticulate)
 
 
 ### Python
@@ -777,6 +786,169 @@ pd.concat([df_some.head(2),df_some.tail(2)])
 
 :::
 
+## Exercises - Data
+
+::: panel-tabset
+
+### R 
+
+```{r eval=F}
+## Exercises about data types
+
+# 1. Create following sequences: 
+# 4, 8, 12, 16, 20, 24, 28
+# 10, 8, 6, 4, 2, 0
+# repeat "chocolate" 10 times in a vector
+
+
+# 2. Starting with the following code, divide a by b and save it as variable c:
+
+a <- "5555555"
+b <- 3
+
+
+# 3. Starting with following code, create the string/ character vector "group3trial1.csv"
+
+group <- 3
+trial <- 1
+
+
+## Exercises about data frames
+
+# 1. Read the data "allForarexData.csv"
+
+# 2. Convert Exp0_OxygenTemp and Exp1_OxygenTemp. Devide by 1000. Save the result in the same column.
+
+# 3. What are the means of Exp0_OxygenTemp and Exp1_OxygenTemp?
+
+# 4. Save the timestamp in the correct format. The time was measured in seconds. (origin="1970-01-01")
+
+# 5. When was the first measurement? When was the last measurement?
+
+# 6. Create a subset containing only data measured after 2019-03-09 10:25:52.
+
+# 7. Difficult: Exclude columns, where all measurements are the same. 
+# hint at the bottom of the file
+
+
+## Exercises about both data frames and data types
+
+# Use beedata.csv
+
+# 1. Select the lines of the bee data set where the hive number is 13 or 14.
+
+# 2. What are the classes of the beedata's columns hive and t_i_1?
+
+# 3. Difficult: How can you print the classes of all columns?
+
+
+
+
+
+
+
+# Hint
+# hint "Data types", 7: one option is to check if the min value of a column equals the max value. You can use a loop or following function: sapply(flight, function(x){min(x)!=max(x)})
+
+```
+
+### Python
+
+bla
+
+### R - Solutions
+
+```{r eval=F}
+## Exercises about data types
+
+# 1. Create following sequences: 
+# 4, 8, 12, 16, 20, 24, 28
+# 10, 8, 6, 4, 2, 0
+# repeat "chocolate" 10 times in a vector
+
+seq(4,28,4)
+seq(10,0,-2)
+rep("chocolate", 10)
+
+
+# 2. Starting with the following code...:
+
+a <- "5555555"
+b <- 3
+
+
+c <- as.numeric(a) / b
+
+
+# 3. Starting with following code, create the filename "group3trial1.csv"
+
+group <- 3
+trial <- 1
+
+paste("group", group, "trial", trial, ".csv", sep="")
+
+
+## Exercises about data frames
+
+# 1. Read the data "allForarexData.csv"
+flight <- read.table("allForarexData.csv", header = T, sep = ",")
+
+# 2. Convert Exp0_OxygenTemp and Exp1_OxygenTemp. Devide by 1000. Save the result in the same column.
+flight$Exp0_OxygenTemp <- flight$Exp0_OxygenTemp/1000
+flight$Exp1_OxygenTemp <- flight$Exp1_OxygenTemp/1000
+
+# 3. What are the means of Exp0_OxygenTemp and Exp1_OxygenTemp?
+mean(flight$Exp0_OxygenTemp)
+mean(flight$Exp1_OxygenTemp)
+
+# 4. Save the timestamp in the correct format. The time was measured in seconds.
+flight$timeStamp <- as.POSIXct(flight$timeStamp, origin="1970-01-01")
+
+# 5. When was the first measurement? When was the last measurement?
+min(flight$timeStamp)
+max(flight$timeStamp)
+
+# 6. Create a subset containing only data measured after 2019-03-09 10:25:52.
+
+# hint: You might have to use "as.POSIXct("2019-03-09 10:25:52")" for the boolean expression.
+
+flight.subtime <- flight[flight$timeStamp>as.POSIXct("2019-03-09 10:25:52"),]
+
+# update: actually this works as well, so no need for as.POSIXct
+
+
+flight.subtime <- flight[flight$timeStamp>"2019-03-09 10:25:52",]
+
+
+# 7. Difficult: Exclude columns, where all measurements are the same. 
+
+# hint: one option is using: sapply(flight, function(x){min(x)!=max(x)})
+
+ncol(flight)
+flight.sub <- flight[, sapply(flight, function(x){min(x)!=max(x)})]
+ncol(flight.sub)
+
+## Exercises about both data frames and data types
+
+# Use beedata.csv
+
+# 1. Select the lines of the bee data set where the hive number is 13 or 14.
+
+df.13or14 <- df[df$hive==13|df$hive==14,]
+
+
+# 2. What are the classes of the beedata's columns hive and t_i_1?
+
+class(df$hive)
+class(df$t_i_1)
+
+# 3. Difficult: How can you print the classes of all columns?
+
+lapply(df, class)
+
+```
+
+:::
 
 ## Conditions - If and Else
 
@@ -1210,8 +1382,360 @@ while True:
 
 :::
 
+## Exercises - Conditions, For and While
+
+::: panel-tabset
+
+### R
 
 
+```{r eval=F}
+  
+# 1. Imagine somebody tells you the age of two of her friends,
+# Ali and Bea. If Ali is older than Bea print 
+# "Ali is older than Bea.". If Bea is older than Ali,
+# print "Bea is older than Ali.".
+
+Ali <- 5555/111
+Bea <- 10*5
+
+
+
+
+## For and While
+
+#  1. Loop from 1 to 15 and print the square-root of 
+# each number
+
+# 2. The function "rbinom(1,1,0.9)" models a very unfair
+# coin, which shows the head (1) with a probability 
+# of 90 %. Flip this coin until you get tail (0). 
+# Count how many times you flipped the coin.
+
+# 3. Repeat each character of the string "Summer" 3 times.
+# Combine all characters to a new string. 
+
+# hint at the bottom of this file
+
+
+
+# 4. Difficult: Read in all files in the directory 
+# "forarexData" and combine them to a single data frame.
+
+# hint at the bottom of this file
+
+
+### Exercises: Functions
+
+# 1. In one of the previous tasks you wrote some code to
+# Repeat each character of the string "Summer" 3 times.
+# Convert it into a function. It should take two parameters:
+# - a string, e.g. “summer”.
+# - A number, e.g. 3 to specify how often each letter 
+#   should be repeated.
+# Use “summer” and 3 as default values.
+
+# hint at the bottom of this file
+
+
+# 2. We look at the data from the beehives again. 
+# Given a beehive, how many observations do we have
+# for that beehive? How many observations are missing
+# in the column “weight_kg”? Write a function for this
+# problem. Return both values in a named list.
+# Use the dataframe and the hive number as input parameters.
+
+# 3. Difficult-follow-up: In a previous exercise, you wrote some code to read
+# in all files within a directory. 
+# Convert the code to a function.
+
+
+
+
+
+
+
+
+# Hints
+
+
+# Watch out, spoiler alert!
+
+# hint "For and While", 3:  Check out the functions "substr" and "nchar".
+
+
+
+
+
+# hint "For and While", 4:  Useful functions: list.files, try or try-catch, rbind
+
+
+
+# hint "Functions" 1: in case you did not find the solution. This is the solution:
+
+# Watch out this is a solution for another task!
+
+
+s <- "summer"
+s1 <- ""
+for(i in 1:nchar(s)){
+  for(j in 1:3){
+    s1 <- paste(s1, substr(s, i, i), sep = "")
+  }
+}
+s1
+
+
+```
+
+
+### Python
+
+bla
+
+### R - Solutions
+
+```{r eval=F}
+## Exercises - Conditions
+
+# 1. Imagine somebody tells you the age of two of her friends,
+# Ali and Bea. If Ali is older than Bea print 
+# "Ali is older than Bea.". If Bea is older than Ali,
+# print "Bea is older than Ali.".
+
+Ali <- 5555/111
+Bea <- 10*5
+
+if (Ali>Bea){
+  print("Ali is older than Bea.")
+} else{
+  print("Bea is older than Ali.")
+}
+
+# 2. The price of a small bar of chocolate is 1 Euro. 
+# For a medium bar of chocolate you have to pay 3 Euros 
+# and for a large bar you have to pay 5 Euros.
+# Somebody tells you how much money she has. 
+# Tell her, how much chocolate she can buy 
+# (Eg. print "You can buy a small bar of chocolate.")
+# She does not want to buy more than one bar of chocolate, 
+# but the largest possible.
+
+money <- 14/3
+
+if (money >= 5){
+  print("You can buy a large bar of chocolate.")
+} else if (money >= 3){
+  print("You can buy a medium bar of chocolate.")
+} else if (money >= 1){
+  print("You can buy a small bar of chocolate.")
+} else{
+  print("Sorry, you can't buy any chocolate.")
+}
+
+## For and While
+
+#  1. Loop from 1 to 15 and print the square-root of 
+# each number
+
+for (i in 1:15){
+  print(sqrt(i))
+}
+
+# 2. The function "rbinom(1,1,0.9)" models a very unfair
+# coin, which shows the head (1) with a probability 
+# of 90 %. Flip this coin until you get tail (0). 
+# Count how many times you flipped the coin.
+
+coin <- 1
+index <- 0
+while (coin!=0){
+  coin <- rbinom(1,1,0.9)
+  index <- index +1
+}
+index
+
+# or
+
+index <- 0
+repeat{
+  coin <- rbinom(1,1,0.9)
+  index <- index +1
+  if(coin==0){
+    break
+  }
+}
+index
+
+# 3. Repeat each character of the string "Summer" 3 times.
+# Combine all characters to a new string. 
+
+# hint:  Check out the functions "substr" and "nchar".
+
+s <- "summer"
+s1 <- ""
+for(i in 1:nchar(s)){
+  for(j in 1:3){
+    s1 <- paste(s1, substr(s, i, i), sep = "")
+  }
+}
+s1
+
+
+# 4. Difficult: Read in all files in the directory 
+# "forarexData" and combine them to a single data frame.
+
+# hint:  Useful functions: list.files, try or try-catch, rbind
+
+dir <- "forarexData/"
+files <- list.files(dir)
+files <- paste(dir, files, sep="")
+
+df<-data.frame()
+
+for (i in 1:length(files)) {
+  tmp <- read.csv(file = files[i])
+  df <- rbind(df,tmp)
+}
+
+### Exercises: Functions
+
+# 1. In one of the previous tasks you wrote some code to
+# Repeat each character of the string "Summer" 3 times.
+# Convert it into a function. It should take two parameters:
+# - a string, e.g. “summer”.
+# - A number, e.g. 3 to specify how often each letter 
+#   should be repeated.
+# Use “summer” and 3 as default values.
+# hint: in case you did not find the solution. This is the solution:
+
+# Watch out this is a solution for another task!
+
+
+s <- "summer"
+s1 <- ""
+for(i in 1:nchar(s)){
+  for(j in 1:3){
+    s1 <- paste(s1, substr(s, i, i), sep = "")
+  }
+}
+s1
+
+funny.words <- function(word=summer, repeat.times=3) {
+  s1 <- ""
+  for(i in 1:nchar(word)){
+    for(j in 1:repeat.times){
+      s1 <- paste(s1, substr(word, i, i), sep = "")
+    }
+  }
+  return(s1)
+}
+
+# 2. We look at the data from the beehives again. 
+# Given a beehive, how many observations do we have
+# for that beehive? How many observations are missing
+# in the column “weight_kg”? Write a function for this
+# problem. Return both values in a named list.
+# Use the dataframe and the hive number as input parameters.
+
+df <- read.csv("beedata.csv")
+
+beehive.info <- function(df, hive){
+  sub <- df[df$hive==hive,]
+  n <- nrow(sub)
+  missing <- sum(is.na(sub$weight_kg))
+  return(list(n=n, missing=missing))
+}
+beehive.info(df, 4)
+beehive.info(df, 13)
+
+# 3. In a previous exercise, you wrote some code to read
+# in all files within a directory. 
+# Convert the code to a function.
+
+
+combine <- function(dir="forarexData/", finalName="forarexCombined.csv"){
+  # Purpose: the function can combine the files and save to a new csv
+  # Parameters:
+  #  dir: the directory of the files to be combined
+  #  finalName: the name of the file to be used to save the csv
+  
+  # list all files in directory
+  files <- list.files(dir)
+  files <- paste(dir, files, sep="")
+  
+  df<-data.frame()
+  
+  for (i in 1:length(files)) {
+    tmp <- read.csv(file = files[i])
+    df <- rbind(df,tmp)
+  }
+  write.csv(df, finalName)
+}
+
+combine()
+
+### Other option with try
+
+combine.try <- function(dir="forarexData/", finalName="forarexCombined.csv"){
+  # Purpose: the function can combine the files and save to a new csv
+  # Parameters:
+  #  dir: the directory of the files to be combined
+  #  finalName: the name of the file to be used to save the csv
+  
+  # list all files in directory
+  files <- list.files(dir)
+  files <- paste(dir, files, sep="")
+  
+  df<-data.frame()
+  
+  for (i in 1:length(files)) {
+    try({
+      tmp <- read.csv(file = files[i])
+      df <- rbind(df,tmp)
+    })
+  }
+  write.csv(df, finalName)
+}
+combine.try()
+
+# option with trycatch, in case some files are completly screwed up
+
+combine.trycatch <- function(dir="forarexData/", finalName="forarexCombined.csv"){
+  # Purpose: the function can combine the files and save to a new csv
+  # Parameters:
+  #  dir: the directory of the files to be combined
+  #  finalName: the name of the file to be used to save the csv
+  
+  # list all files in directory
+  files <- list.files(dir)
+  files <- paste(dir, files, sep="")
+  
+  df<-data.frame()
+  
+  for (i in 1:length(files)) {
+    tryCatch({
+      tmp <- read.csv(file = files[i])
+      df <- rbind(df,tmp)
+    },
+    warning = function(warning_condition){
+      print(paste("Some weird formatting in file", files[i]))
+      print(warning_condition)
+    },
+    # handling of errors, if there was some wrong formating
+    error = function(error_condition){
+      print(paste("Skipping file", files[i]))
+      print(error_condition)
+    })
+  }
+  write.csv(df, finalName)
+}
+combine.trycatch()
+
+```
+
+
+:::
 
 ## Writing own functions
 
@@ -1440,6 +1964,13 @@ link to scripts will follow
 
 # Statistics
 
+## First Step: Look at your data (Descriptive Statistics)
+
+- What is your response variable?
+- Plot your data
+  * Plot raw data
+  * Frequency distribution
+  -> Are there any patterns?
 
 ## Definition - Simple Linear Regression
 
@@ -1453,21 +1984,47 @@ where $y$ is the dependent variable, $x$ is the independent variable (also calle
 ## Sample data
 
 ```{r}
+set.seed(123)
 x <- seq(0,5,0.1) 
 y <- x + rnorm(length(x))
 plot(x, y)
+hist(y)
 
 ```
 
 ## Fitting a Linear Model
 
 ```{r}
+
+
 mod <- lm(y~x)
 summary(mod)
 plot(x,y)
-abline(reg = mod)
+#abline(mod)
+library(ggplot2)
+ggplot(mapping= aes(x, y)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+
 ```
 
+## Overall check for assumptions
+
+
+```{r}
+plot(mod)
+```
+Produces series of graphs (first two are the most important)
+		
+### 1st graph: Constancy of variance
+			Plot of the residuals against the fitted values
+			→ Should look like the sky at night
+			
+### 2nd graph: Normality of errors
+Normal QQ plot = plot of the ordered residuals against the fitted values
+			→ Should be a reasonably straight line
+			
 ## Linear Model - Assumptions
 
 - Linear relationship between x and y
@@ -1537,9 +2094,46 @@ shapiro.test(res)
 ```
 - We cannot reject the null-hypothesis that the data is normally distributed. 
 
-## Other possibilities of checking assumptions
+## If model doesn’t seem to fit your data:
 
-- Did you learn about this before? Did you hear about other options?
+### Is your response really continuous?
+
+If not another model might be more appropriate:
+- Continuous: linear model → LM
+		e.g. height, weight
+- Count: Poisson model → GLM
+		e.g. number of individuals
+- Binary: Binomial model → GLM
+		e.g. presence / absence
+
+### Are there obvious patterns?
+
+For example many zeros:
+You could separate in two analysis: Binomial model for success / failure and linear model for successes
+
+### Are there outliers that should be omitted?
+4th graph of plot(model): Plot of Cook´s distances versus raw data
+→ Highlights the identity of particularly influential data points
+
+### Relationship not a straight line?
+Polynomial regression e.g. a quadratic function might be an option
+	
+```{r eval=F}
+ lm(y ~ x + I(x^2))
+```
+
+### Transformation
+You could for example use a log transformation of the response variable
+
+```{r eval=FALSE}
+	lm(log(y) ~ x)
+```
+
+
+
+### Are there other explanatory variables that you should include?
+
+SHOW ON PENGUIN EXAMPLE (include species as categorical variable)
 
 
 ## Definition - Linear Model with multiple predictors
@@ -1713,6 +2307,114 @@ mdf <- melt(df.4.cols, id=c("time"))
 library(ggplot2)
 ggplot(data = mdf, aes(x=time, y=value)) + geom_line(aes(colour=variable)) + ylim(c(0, 40))
 ```
+
+## Exercises - Plotting and more
+
+::: panel-tabset
+
+### R
+
+```{r eval = F}
+
+
+## Plotting
+
+# 1. Choose a set of data from your background. 
+# Decide for one of the presented plotting-libraries.
+# Create a plot and add a title and custom x and y labels.
+# In case you plotted multiple lines, add a legend.
+# Difficult: Try to find out, how you can change the fontsize of the axis-labels.
+
+# 2. Automatically save your plot to a given destination  
+
+# 3. Try to make your code more abstract and useful. 
+# Put your code within a function.
+# - use the file-name (destination) as a parameter
+# - In case you have multiple covariate, 
+# use the covariate(s) to be plotted as input parameter
+# - In case it makes sense to subset your data, introduce
+#    a parameter for the choice of the subset.
+
+# Always have in mind: if something goes wrong, you can use debugging.
+
+# Exercises - Piping
+
+# 1. Rewrite the following code using %>% and %<>%:
+
+x <- 2
+round(log(x))
+
+
+# 2. Rewrite the second line of following code:
+
+x <- rnorm(10,100)
+round(sum(sqrt(x)), 3)
+
+
+## Loops and functions again
+# If you have some code you wrote in the past 
+# for some exercise, for your studies, for your work...
+# See if you can find pieces of code which you 
+# just copied and pasted multiple times (don't worry, this is normal)
+# Try to transform the code using loops and functions
+
+```
+
+### Python
+
+### R - Solutions
+
+```{r eval= FALSE}
+## Exercises - Piping
+
+# 1. Rewrite the following code using %>% and %<>%:
+
+x <- 2
+round(log(x))
+
+
+x <- 2
+x %<>% log %>% round
+
+# 2. Rewrite the second line of following code:
+
+x <- rnorm(10,100)
+round(sum(sqrt(x)), 3)
+
+
+
+x %>% sqrt %>% sum %>% round(3)
+
+## Plotting
+
+# 1. Choose a set of data from your background. 
+# Decide for one of the presented plotting-libraries.
+# Create a plot and add a title and custom x and y labels.
+# In case you plotted multiple lines, add a legend.
+# Try to find out, how you can change the fontsize of the axis-labels.
+
+# 2. Automatically save your plot to a given destination  
+
+# 3. Try to make your code more abstract and useful. 
+# Put your code within a function.
+# - use the file-name (destination) as a parameter
+# - In case you have multiple covariate, 
+# use the covariate(s) to be plotted as input parameter
+# - In case it makes sense to subset your data, introduce
+#    a parameter for the choice of the subset.
+
+# Always have in mind: if something goes wrong, you can use debugging.
+
+## Loops and functions again
+# If you have some code you wrote in the past 
+# for some exercise, for your studies, for your work...
+# See if you can find pieces of code which you 
+# just copied and pasted multiple times (don't worry, this is normal)
+# Try to transform the code using loops and functions
+
+```
+
+:::
 
 # R-Markdown
 

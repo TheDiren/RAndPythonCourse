@@ -2961,9 +2961,10 @@ x %>% sqrt %>% sum %>% round(3)
 
 :::
 
-# R-Markdown
+# Markdown and R-Markdown
 
-R-Markdown is a great way to document your code and to write reports about your results.
+Markdown is a great way to document your code and to write reports about your results. Here, we describe R-Markdown in detail. However, you can also use python. Especially easy to work with are jupyter notebooks, which can switch the formatting of individual cells between code and markdown. See this [documentation](https://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/Working%20With%20Markdown%20Cells.html) for details.
+
 
 ## Output formats
 

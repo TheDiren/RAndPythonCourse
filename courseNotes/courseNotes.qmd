@@ -36,7 +36,7 @@ This guide was created for the course "Data Science in Environmental Science and
 ## Agenda - Day 1: PANGAEA and R & Python basics
 
 | **Aug 20th** | Topic | Presenter |
-|------------------|-------------------------------------|-----------------|
+|------------------|------------------------------------|------------------|
 | 10:00 | Round of introductions (20 min) | all including participants |
 | 10:00 | Intro PANGAEA, data repos (20 min) | DR |
 | 10:20 | How to find and use data from PANGAEA (15 mins) | KRC |
@@ -55,7 +55,7 @@ This guide was created for the course "Data Science in Environmental Science and
 ## Agenda - Day 2: Getting data from PANGAEA und Data Cleaning
 
 | **Aug 21st** | Topic | Presenter |
-|------------------|-------------------------------------|-----------------|
+|------------------|------------------------------------|------------------|
 | 09:00 | Downloading and manipulating PANGAEA data in R - in brief | DR |
 | 09:45 | **Minibreak** |  |
 | 09:50 | Downloading and manipulating PANGAEA data in Python (100 min including **bio break** after 45 min) | KRC |
@@ -67,7 +67,7 @@ This guide was created for the course "Data Science in Environmental Science and
 ## Agenda - Day 3: Plotting und Statistics
 
 | **Aug 22nd** | Topic | Presenter |
-|------------------|-------------------------------------|-----------------|
+|------------------|------------------------------------|------------------|
 | 09:00 | Intro and Cleaning of Penguin data set, Plotting & Statistics | DS & MR |
 | 12:30 | **Lunch break** |  |
 | 02:00 | Markdown & time for open Questions | all |
@@ -524,7 +524,6 @@ family_frame
 
 The slides of the PANGAEA theory part are stored in [github](https://github.com/TheDiren/RAndPythonCourse/blob/main/presentations/PANGAEA_slides.pdf).
 
-
 # Basics R and Python
 
 ## Preparing your data for analysis
@@ -957,9 +956,7 @@ lapply(df, class)
 
 ```
 
-
 ### Python
-
 
 ```{python}
 ## Exercises about data types
@@ -1000,7 +997,9 @@ trial = 1
 
 # 7. Difficult: Exclude columns, where all measurements are the same. 
 ```
+
 Hint: there is a function called [nunique](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.nunique.html)
+
 ```{python}
 ## Exercises about both data frames and data types
 
@@ -1015,11 +1014,9 @@ Hint: there is a function called [nunique](https://pandas.pydata.org/docs/refere
 
 ```
 
-
 ### Python - Solutions
 
-
-```{python}
+```{python eval=F}
 ## Exercises about data types
 
 # 1. Create following sequences: 
@@ -1095,7 +1092,9 @@ df_subtime.head()
 
 # 7. Difficult: Exclude columns, where all measurements are the same. 
 ```
+
 hint: there is a function called [nunique](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.nunique.html)
+
 ```{python}
 constant_columns = [col for col in df.columns if df[col].nunique() == 1]
 
@@ -1119,11 +1118,6 @@ filtered_df.head()
 df.info()
 
 ```
-
-
-
-
-
 :::
 
 ## Conditions - If and Else
@@ -1901,15 +1895,12 @@ for file in files:
 print(df)
 
 ```
-
 :::
 
 ## Writing own functions
 
 ::: panel-tabset
-
 ### R
-
 
 The basic syntax to write functions looks like this:
 
@@ -1979,7 +1970,6 @@ df = pd.read_csv('beedata.csv')
 
 dataframe_info(df)
 ```
-
 :::
 
 ## Exercises: Functions

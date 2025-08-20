@@ -873,10 +873,6 @@ trial <- 1
 
 ```
 
-### Python
-
-bla
-
 ### R - Solutions
 
 ```{r eval=F}
@@ -960,6 +956,174 @@ class(df$t_i_1)
 lapply(df, class)
 
 ```
+
+
+### Python
+
+
+```{python}
+## Exercises about data types
+
+# 1. Create following sequences: 
+# 4, 8, 12, 16, 20, 24, 28
+# 10, 8, 6, 4, 2, 0
+# repeat "chocolate" 10 times in a vector
+
+
+# 2. Starting with the following code, divide a by b and save it as variable c:
+
+a = "5555555"
+b = 3
+
+
+# 3. Starting with following code, create the string/ character vector "group3trial1.csv"
+
+group = 3
+trial = 1
+
+
+## Exercises about data frames
+
+# 1. Read the data "allForarexData.csv"
+
+# 2. Convert Exp0_OxygenTemp and Exp1_OxygenTemp. Devide by 1000. Save the result in the same column.
+
+# 3. What are the means of Exp0_OxygenTemp and Exp1_OxygenTemp?
+
+# 4. Save the timestamp in the correct format. The time was measured in seconds. (origin="1970-01-01")
+
+# 5. When was the first measurement? When was the last measurement?
+
+# if you are unsure whether the data are chronologically sorted
+
+# 6. Create a subset containing only data measured after 2019-03-09 09:25:52.
+
+# 7. Difficult: Exclude columns, where all measurements are the same. 
+```
+Hint: there is a function called [nunique](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.nunique.html)
+```{python}
+## Exercises about both data frames and data types
+
+# Use beedata.csv
+
+# 1. Select the lines of the bee data set where the hive number is 13 or 14.
+
+# 2. What are the classes of the beedata's columns hive and t_i_1?
+
+# 3. Difficult: How can you print the classes of all columns?
+
+
+```
+
+
+### Python - Solutions
+
+
+```{python}
+## Exercises about data types
+
+# 1. Create following sequences: 
+# 4, 8, 12, 16, 20, 24, 28
+# 10, 8, 6, 4, 2, 0
+# repeat "chocolate" 10 times in a vector
+
+sequence = list(range(4, 29, 4))
+print(sequence)
+
+sequence = list(range(10, -1, -2))
+print(sequence)
+
+words = ["chocolate"] * 10
+print(words)
+
+
+# 2. Starting with the following code...:
+
+a = "5555555"
+b = 3
+
+c = int(a) / b
+print(c)
+
+
+# 3. Starting with following code, create the filename "group3trial1.csv"
+
+group = 3
+trial = 1
+
+filename = "group" + str(group) + "trial" + str(trial) + ".csv"
+print(filename)
+
+
+## Exercises about data frames
+
+# 1. Read the data "allForarexData.csv"
+
+# import package
+import pandas as pd
+
+# open the data as dataframe 
+df = pd.read_csv('/isibhv/projects/p_pangaea_proces/kriemann/python/2025_informatica/allForarexData.csv')
+
+# use head function to see the first 5 rows of the dataframe
+df.head()
+
+# 2. Convert Exp0_OxygenTemp and Exp1_OxygenTemp. Devide by 1000. Save the result in the same column.
+df['Exp0_OxygenTemp'] = df['Exp0_OxygenTemp']/1000.
+df['Exp1_OxygenTemp'] = df['Exp1_OxygenTemp']/1000.
+
+# 3. What are the means of Exp0_OxygenTemp and Exp1_OxygenTemp?
+print(df['Exp0_OxygenTemp'].mean())
+print(df['Exp1_OxygenTemp'].mean())
+
+# 4. Save the timestamp in the correct format. The time was measured in seconds. (origin="1970-01-01")
+df['timeStamp'] = pd.to_datetime(df['timeStamp'], unit='s', origin=pd.Timestamp('1970-01-01'))
+df.head()
+
+# 5. When was the first measurement? When was the last measurement?
+
+# if you are unsure whether the data are chronologically sorted
+df = df.sort_values(by=['timeStamp'], ascending=True)
+
+df.head(1)
+df.tail(1)
+
+# 6. Create a subset containing only data measured after 2019-03-09 09:25:52.
+
+df_subtime = df[df['timeStamp']>'2019-03-09 09:25:52']
+df_subtime.head()
+
+# 7. Difficult: Exclude columns, where all measurements are the same. 
+```
+hint: there is a function called [nunique](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.nunique.html)
+```{python}
+constant_columns = [col for col in df.columns if df[col].nunique() == 1]
+
+print("Constant columns:", constant_columns)
+
+df_sub = df.drop(constant_columns, axis=1)
+
+## Exercises about both data frames and data types
+
+# Use beedata.csv
+
+# 1. Select the lines of the bee data set where the hive number is 13 or 14.
+filtered_df = df[(df['hive'] == 13) | (df['hive'] == 14)]
+filtered_df.head()
+
+# 2. What are the classes of the beedata's columns hive and t_i_1?
+
+# 3. Difficult: How can you print the classes of all columns?
+
+# This is not at all difficult in python:
+df.info()
+
+```
+
+
+
+
+
 :::
 
 ## Conditions - If and Else

@@ -27,101 +27,125 @@ format:
     lib-dir: book_assets
 ---
 
-
 # About
 
 This guide was created for the course "Data Science in Environmental Science and Oceanography with R and Python" at the Informatica Feminale 2025.
 
+# Agenda
+## Agenda - Day 1: PANGAEA and R & Python basics
 
-# Before the course 
+| **Aug 20th** |      Topic                         |  Presenter |
+|------------------|------------------------------------|------------|
+| 10:00            | Round of introductions  (20 min)   | all including participants   |
+| 10:00            | Intro PANGAEA, data repos (20 min) | DR         |
+| 10:20            | How to find and use data from PANGAEA (15 mins) | KRC      |
+| 10:35            | Quiz (10 min) |  KRC       |
+| 10:45            | How to download datasets  (10 min) |     KRC    |
+| 10:55            | Questions I  (10 min)              |   KRC & DR |
+| 11:05            | **break**                          |            |
+| 11:15            | Intro to PANGAEA packages and tokens (20-25 min) |  DR |
+| 11:35            | Questions II (10min)               |  DR & KRC| 
+|                  |                                    |    |
+| 11:45            | **Lunch break**                   |         |
+|                  |                                    |    |
+| 02:00            | basics R and python                | DS |
+| 04:30            |   end of day 1                     |     | 
 
+
+## Agenda - Day 2: Getting data from PANGAEA und Data Cleaning
+
+| **Aug 21st** |      Topic                         | Presenter |
+|------------------|------------------------------------|-----------|
+| 09:00            |  Downloading and manipulating PANGAEA data in R -  in brief     |   DR     |
+| 09:45            | **Minibreak**                          |           |
+| 09:50            | Downloading and manipulating PANGAEA data in Python (100 min including **bio break**  after 45 min) |  KRC          |
+| 12:30            | **Lunch break**                    |           |
+| 02:00            |  Data Cleaning in python  |   KRC     | 
+| 03:40            |   Data Cleaning in R   | DS  |
+| 04:30            |   end of day 2                     |     |
+
+## Agenda - Day 3: Plotting und Statistics
+
+| **Aug 22nd** |      Topic                         | Presenter |
+|------------------|------------------------------------|-----------|
+| 09:00            | Intro and Cleaning of Penguin data set, Plotting & Statistics  | DS & MR       |
+| 12:30            | **Lunch break**                    |           |
+| 02:00            | Markdown &  time for open Questions | all    |
+| 04:30            |   end of day 3                     |           |
+
+
+
+# Before the course
 
 ## Installation Notes
 
-
 ::: panel-tabset
-
-
 ### R
 
+If you haven't installed R and RStudio yet, use following instructions for the installation:
 
+1.  Install R:
 
-  If you haven't installed R and RStudio yet, use following instructions for the installation:
-  
-1. Install R: 
-  
-Installation on Windows and Mac
-[https://www.dataquest.io/blog/installing-r-on-your-computer/](https://www.dataquest.io/blog/installing-r-on-your-computer/)
-For Linux
-[https://cran.r-project.org/doc/FAQ/R-FAQ.html#How-can-R-be-installed-_0028Unix_002dlike_0029](https://cran.r-project.org/doc/FAQ/R-FAQ.html#How-can-R-be-installed-_0028Unix_002dlike_0029)
+Installation on Windows and Mac <https://www.dataquest.io/blog/installing-r-on-your-computer/> For Linux <https://cran.r-project.org/doc/FAQ/R-FAQ.html#How-can-R-be-installed-_0028Unix_002dlike_0029>
 
+2.  Install the free RStudio Desktop Version: https://www.rstudio.com/products/rstudio/#Desktop
 
+3.  Do you know how you can install new R packages? You can read about it here: <https://thedatacommunity.org/2017/09/17/installing-loading-unloading-and-removing-r-packages-in-rstudio/>
 
-2. Install the free RStudio Desktop Version: https://www.rstudio.com/products/rstudio/#Desktop
+In this script, we make use of following packages:
 
-
-3. Do you know how you can install new R packages? You can read about it here: [ https://thedatacommunity.org/2017/09/17/installing-loading-unloading-and-removing-r-packages-in-rstudio/](https://thedatacommunity.org/2017/09/17/installing-loading-unloading-and-removing-r-packages-in-rstudio/ )
-
-
-
-In this script, we make use of following packages: 
-
-- pangaear
-- dplyr
-- tidyr
-- stringr
-- lubridate
-- httr
-- worrms
-- knitr
-- magrittr
-- car
-- palmerpenguins
-- reshape
-- ggplot2
-- (reticulate)
-
+-   pangaear
+-   dplyr
+-   tidyr
+-   stringr
+-   lubridate
+-   httr
+-   worrms
+-   knitr
+-   magrittr
+-   car
+-   palmerpenguins
+-   reshape
+-   ggplot2
+-   (reticulate)
 
 ### Python
 
-Very many integrated development environment (IDE) software programs exist for Python. For this beginners course, we recommend the free and open source Python IDE called [Thonny](https://thonny.org/).  
+Very many integrated development environment (IDE) software programs exist for Python. For this beginners course, we recommend the free and open source Python IDE called [Thonny](https://thonny.org/).
 
-1. Install Python:  
-[Thonny](https://thonny.org/) is available for Windows, Mac and Linux. Just download the suitable executable installation file for your computer and start the installation. The basic set up of Python is done. When you open [Thonny](https://thonny.org/) for the first time, you will see the default set up of windows with a *code editor* on the upper left side, a *shell* on the lower left side and an *assistant* on the right hand side:
-![Thonny default set up](images/thonny_default_setup.png){width=800}
+1.  Install Python:\
+    [Thonny](https://thonny.org/) is available for Windows, Mac and Linux. Just download the suitable executable installation file for your computer and start the installation. The basic set up of Python is done. When you open [Thonny](https://thonny.org/) for the first time, you will see the default set up of windows with a *code editor* on the upper left side, a *shell* on the lower left side and an *assistant* on the right hand side: ![Thonny default set up](images/thonny_default_setup.png){width="800"}
 
-2. Install additional Python packages:  
-During our course, we will use several additional packages. All can be installed **either** via the package installer PIP.  
-Example: Write the following code in the shell to install PANGAEApy.  
+2.  Install additional Python packages:\
+    During our course, we will use several additional packages. All can be installed **either** via the package installer PIP.\
+    Example: Write the following code in the shell to install PANGAEApy.\
+
 ```{python, eval = FALSE}
 !pip install pangaeapy
 ```
 
 **Or** click in the upper left hand corner of [Thonny](https://thonny.org/) on *Tools* and select *Manage packages …*. Search *jupyter* on PyPI and click on the *jupyter* search result to start the installation.
-  
-The following packages are needed for this course:  
-- jupyter  
-- pangaeapy    
-- numpy  
-- pandas  
-- re  
-- os  
-- datetime  
-- ipdb   
-- requests  
-- LatLon23  
-- difflib  
-- collections  
-- matplotlib  
-- plotly  
 
+The following packages are needed for this course:\
+- jupyter\
+- pangaeapy\
+- numpy\
+- pandas\
+- re\
+- os\
+- datetime\
+- ipdb\
+- requests\
+- LatLon23\
+- difflib\
+- collections\
+- matplotlib\
+- plotly
 :::
-
 
 ## Programming Environments
 
 ::: panel-tabset
-
 ### R
 
 For R, we recommend RStudio.
@@ -136,77 +160,64 @@ setwd("~/Documents/")
 
 It can be helpful to create a project instead. All files within the project's directory will automatically have the correct working directory. In this way you can create new files and start coding easily.
 
-
-1. Click File -> New Project...
-  Even when you choose "Existing Directory" you will still be able to create a new directory
-![Creating a Project, Step 1](images/project1.png)
-2. Enter the diretory path straight away, or click on browse.
-![Creating a Project, Step 2](images/project2.png)
-3. Choose an existing directory or create a new one
-![Creating a Project, Step 3](images/project3.png)
+1.  Click File -\> New Project... Even when you choose "Existing Directory" you will still be able to create a new directory ![Creating a Project, Step 1](images/project1.png)
+2.  Enter the diretory path straight away, or click on browse. ![Creating a Project, Step 2](images/project2.png)
+3.  Choose an existing directory or create a new one ![Creating a Project, Step 3](images/project3.png)
 
 #### RStudio screen
 
-- In the upper left hand corner you have the code editor. This is where you can type your scripts.
-- In the bottom left hand corner you have the console. Here you will see the results of all commands you are running.
-- In the upper right hand corner you can see all objects you created, e.g. data frames, functions, strings, ...
-- In the bottom left hand corner you will be able to see the files in your project, your plots and more information e.g. about functions
-![RStudio screen](images/rstudio.png)
+-   In the upper left hand corner you have the code editor. This is where you can type your scripts.
+-   In the bottom left hand corner you have the console. Here you will see the results of all commands you are running.
+-   In the upper right hand corner you can see all objects you created, e.g. data frames, functions, strings, ...
+-   In the bottom left hand corner you will be able to see the files in your project, your plots and more information e.g. about functions ![RStudio screen](images/rstudio.png)
 
-You can use "Ctrl" followed by a number to jump to a specific window. If you want to get into the terminal use "Shift+Alt+t" or "Shift+Alt+m". You can find an overview of all short cuts using "Shift+Alt+k".
-![RStudio screen](images/rstudioNumbers.png)
-
+You can use "Ctrl" followed by a number to jump to a specific window. If you want to get into the terminal use "Shift+Alt+t" or "Shift+Alt+m". You can find an overview of all short cuts using "Shift+Alt+k". ![RStudio screen](images/rstudioNumbers.png)
 
 #### R Workflow
 
-- You type your scripts in the code editor, so that you can save them.
-- If you want to run the whole script, you can click on 'Source' at the tope of the code editor or press "Ctrl + Alt + R". (Shortcuts might differ depending on your system.)
-- Use "Ctrl + Alt + B/E" to run from the beginning to the current line or from the current line to the end.
-- If you want to run a single line, you can click on 'Run' or press "Control + Enter"
-- If you want to run a few lines, highlight the lines you want to run and use 'Run'/  "Control + Enter"
-- If you want to use Autocomplete, you can press "Control + Space"
-- If you want to read about an existing method, you can type "?\<Name of the method\>" to get to the documentation
-
+-   You type your scripts in the code editor, so that you can save them.
+-   If you want to run the whole script, you can click on 'Source' at the tope of the code editor or press "Ctrl + Alt + R". (Shortcuts might differ depending on your system.)
+-   Use "Ctrl + Alt + B/E" to run from the beginning to the current line or from the current line to the end.
+-   If you want to run a single line, you can click on 'Run' or press "Control + Enter"
+-   If you want to run a few lines, highlight the lines you want to run and use 'Run'/ "Control + Enter"
+-   If you want to use Autocomplete, you can press "Control + Space"
+-   If you want to read about an existing method, you can type "?\<Name of the method\>" to get to the documentation
 
 ### Python
 
 #### Save your code in a script or notebook
-Python code is saved **either** in scripts with *.py* ending **or** in so called [Jupyter Notebook](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html)s with *.ipynb* ending. There is no difference in the python code itself only in the way the code is executed.   
 
-- Files with **.py** ending need to be executed in a *shell* or *terminal*, somewhere you type the command to execute your script. If you want to know more about the differences between a shell and a terminal, have a look at [GeeksforGeeks](https://www.geeksforgeeks.org/operating-systems/difference-between-terminal-console-shell-and-command-line/).
-  
-- Files with **.ipynb** ending consist of individual cells which can be executed directly in the [Jupyter Notebook](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html).
-  
-- Note: If you open a Jupyter Notebook in an editor, you will see that the python code is mixed with additional code to interprete each notebook cell. You can convert *.py* files to *.ipynb* files an vice versa using a command line tool in the *shell* as described in the [nbconvert documentation](https://nbconvert.readthedocs.io/en/latest/usage.html#convert-script).
-  
+Python code is saved **either** in scripts with *.py* ending **or** in so called [Jupyter Notebook](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html)s with *.ipynb* ending. There is no difference in the python code itself only in the way the code is executed.
 
-In this course we will work with [Jupyter Notebook](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html). To open a *Jupyter environment* write in the *shell* window of [Thonny](https://thonny.org/):  
+-   Files with **.py** ending need to be executed in a *shell* or *terminal*, somewhere you type the command to execute your script. If you want to know more about the differences between a shell and a terminal, have a look at [GeeksforGeeks](https://www.geeksforgeeks.org/operating-systems/difference-between-terminal-console-shell-and-command-line/).
+
+-   Files with **.ipynb** ending consist of individual cells which can be executed directly in the [Jupyter Notebook](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html).
+
+-   Note: If you open a Jupyter Notebook in an editor, you will see that the python code is mixed with additional code to interprete each notebook cell. You can convert *.py* files to *.ipynb* files an vice versa using a command line tool in the *shell* as described in the [nbconvert documentation](https://nbconvert.readthedocs.io/en/latest/usage.html#convert-script).
+
+In this course we will work with [Jupyter Notebook](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html). To open a *Jupyter environment* write in the *shell* window of [Thonny](https://thonny.org/):\
 `!jupyter notebook`
-  
-After pressing *enter*, a browser window will open to show you your *Home directory*.
-![Jupyter home](images/example_jupyter_home.png){width=800}
-Double click on your Jupyter Notebook of choice to open it or open a new one with the *File* button, select *new* and *Notebook*. Select the suggested Kernel and start scripting.
-![New Notebook](images/example_notebook_new.png){width=75%}  
-Type anything you want, e.g. print('Hello World'), into the cell and execute it by clicking on the button with the single triangle.
 
+After pressing *enter*, a browser window will open to show you your *Home directory*. ![Jupyter home](images/example_jupyter_home.png){width="800"} Double click on your Jupyter Notebook of choice to open it or open a new one with the *File* button, select *new* and *Notebook*. Select the suggested Kernel and start scripting. ![New Notebook](images/example_notebook_new.png){width="75%"}\
+Type anything you want, e.g. print('Hello World'), into the cell and execute it by clicking on the button with the single triangle.
 :::
 
-
-##  Data types
+## Data types
 
 ::: panel-tabset
-
-
-### R 
+### R
 
 #### Character
+
 ```{r}
 firstname <- "Pipi"
 surname <- "Langstrumpf"
 name <- paste(firstname, surname)
 name
 ```
+
 #### Numeric
+
 ```{r}
 a <- 1
 b <- 2
@@ -219,7 +230,9 @@ e
 f <- as.integer(3.14)
 f
 ```
+
 #### Logical
+
 ```{r}
 a <- TRUE
 b <- FALSE
@@ -243,7 +256,7 @@ is.na
 as.numeric(a)
 ```
 
-#### && and ||
+#### && and \|\|
 
 ```{r, error=T}
 c(T,T,T) & c(T,F,F)
@@ -254,6 +267,7 @@ T || IDontExist
 ```
 
 #### Vectors
+
 ```{r}
 # a simple numeric vector
 myvector <- c(1,4,6)
@@ -277,7 +291,6 @@ boring <- rep(1, 10)
 boring
 ```
 
-
 #### Factors
 
 ```{r}
@@ -287,7 +300,9 @@ nlevels(fac)
 ```
 
 #### List of lists
+
 You can create a list of lists (a list of vectors):
+
 ```{r}
 myList <- list(smallLetters=letters[1:10], 
                capitalLetters=LETTERS[1:10], 
@@ -296,12 +311,14 @@ myList
 ```
 
 If you want to choose lists, you can do it with a single bracket.
+
 ```{r}
 # Accessing multiple elements
 myList[1:2]
 ```
 
 If you want to choose single elements, you need double brackets:
+
 ```{r}
 # Accessing single elements
 myList[2][2]
@@ -309,9 +326,8 @@ myList[[2]][2]
 myList[[1:2]]
 ```
 
-
-
 #### Matrices
+
 ```{r}
 m <- matrix(data=1:12, nrow = 3, ncol = 4)
 m
@@ -324,7 +340,6 @@ m
 # Element-wise operations
 m * 0.5
 ```
-
 
 ```{r}
 m
@@ -340,10 +355,7 @@ m
 m %*% c(1,2,3,4)
 ```
 
-Good explanation of Matrix multiplication:
-[Eli Bendersky's website](https://eli.thegreenplace.net/2015/visualizing-matrix-multiplication-as-a-linear-combination/)
-
-
+Good explanation of Matrix multiplication: [Eli Bendersky's website](https://eli.thegreenplace.net/2015/visualizing-matrix-multiplication-as-a-linear-combination/)
 
 #### Data frames
 
@@ -351,19 +363,18 @@ Good explanation of Matrix multiplication:
 # Creating a data frame
 family.frame <- data.frame(index = 1:3, firstname = myfamily, surname = rep("Meier", 3))
 ```
+
 ```{r}
 library(knitr)
 kable(family.frame)
 ```
 
-
-
-
-### Python 
+### Python
 
 A comprehensive list of data types is given in the [Python documentation](https://docs.python.org/3/library/datatypes.html).
 
 #### Character aka [String](https://www.geeksforgeeks.org/python/python-string/)
+
 ```{python}
 firstname = 'Pipi'
 surname = 'Langstrumpf'
@@ -375,7 +386,8 @@ name = firstname+' '+surname
 print(name)
 ```
 
-#### [Numeric](https://www.geeksforgeeks.org/python/python-data-types/) 
+#### [Numeric](https://www.geeksforgeeks.org/python/python-data-types/)
+
 ```{python}
 import numpy as np
 
@@ -401,6 +413,7 @@ float(h)
 ```
 
 #### [Logical](https://www.geeksforgeeks.org/python/python-logical-operators/)
+
 ```{python}
 a = True
 b = False
@@ -421,8 +434,8 @@ not a
 
 ```
 
-
 #### [Vectors](https://www.digitalocean.com/community/tutorials/vectors-in-python) aka list
+
 ```{python}
 # a simple numeric vector is similar to a list in python
 myvector = [1,4,6]
@@ -452,8 +465,8 @@ longervector = myvector + odd
 print(longervector)
 ```
 
-
 #### Matrices aka [Array](https://www.geeksforgeeks.org/python/python-arrays/)
+
 ```{python}
 import numpy as np
 m = np.arange(1, 13).reshape(3, 4)  
@@ -467,7 +480,6 @@ Element wise operations:
 result = m * 0.5
 print(result)
 ```
-
 
 ```{python}
 m = np.arange(1, 13).reshape(3, 4)
@@ -493,12 +505,11 @@ result = np.matmul(m, v)
 print(result)
 ```
 
-Good explanation of Matrix multiplication:
-[Eli Bendersky's website](https://eli.thegreenplace.net/2015/visualizing-matrix-multiplication-as-a-linear-combination/)
+Good explanation of Matrix multiplication: [Eli Bendersky's website](https://eli.thegreenplace.net/2015/visualizing-matrix-multiplication-as-a-linear-combination/)
 
 #### Dataframes
 
-Dataframes in Python are defined in the package [Pandas](https://pandas.pydata.org/docs/user_guide/10min.html).  
+Dataframes in Python are defined in the package [Pandas](https://pandas.pydata.org/docs/user_guide/10min.html).
 
 ```{python}
 import pandas as pd
@@ -509,31 +520,23 @@ lastname = ['Meier']*3
 family_frame = pd.DataFrame(list(zip(myfamily,lastname)),columns=['firstname','surname'])
 family_frame
 ```
-
 :::
 
-
 # PANGAEA - Introduction
-The slides of the PANGAEA theory part are stored in [github](https://github.com/TheDiren/RAndPythonCourse/blob/main/presentations/PANGAEA_slides.pdf).
 
-
-
+A link will follow to the slides
 
 # Basics R and Python
-
-
-
 
 ## Preparing your data for analysis
 
 ::: panel-tabset
-
 ### R
 
 #### Reading the data
 
-Usually, you would use the "csv" format to read data into R. Sometimes you have other formats, e.g. "txt". Optimally, you have exactly one line for the header.
-Make sure to choose the correct separator. You also have to tell R whether your file has a header or not.
+Usually, you would use the "csv" format to read data into R. Sometimes you have other formats, e.g. "txt". Optimally, you have exactly one line for the header. Make sure to choose the correct separator. You also have to tell R whether your file has a header or not.
+
 ```{r error=T}
 df <- read.table("beedata.csv")
 ```
@@ -543,6 +546,7 @@ That did not work. Oh, yes, the separator!
 ```{r}
 df <- read.table("beedata.csv", sep = ",")
 ```
+
 ```{r echo=F}
 library(knitr)
 kable(head(df, n = 5))
@@ -553,6 +557,7 @@ Looks ok, but we forgot the heading:
 ```{r}
 df <- read.table("beedata.csv", sep = ",", header = T)
 ```
+
 ```{r  echo=F}
 library(knitr)
 kable(head(df, n = 5))
@@ -561,15 +566,17 @@ kable(head(df, n = 5))
 That looks good!
 
 Alternatively, we can use "read.csv". In this case, the default parameters work for us.
+
 ```{r}
 df <- read.csv("beedata.csv")
 ```
 
-Take care, sometimes you don't get an error, but your data is screwed up anyway:
-![sample Data](images/sampleData.png)
+Take care, sometimes you don't get an error, but your data is screwed up anyway: ![sample Data](images/sampleData.png)
+
 ```{r}
 df <- read.csv("sampleData.csv", sep = " ")
 ```
+
 ```{r  echo=F}
 library(knitr)
 kable(head(df, n = 5))
@@ -579,31 +586,36 @@ Use the head function to inspect your data.
 
 #### Transforming entire columns
 
-The columns/ variables of a dataframe basically behave like entries in a named list. Each element of this list is a vector of a specific type.
-You can inspect the structure of a dataframe using the function "str".
+The columns/ variables of a dataframe basically behave like entries in a named list. Each element of this list is a vector of a specific type. You can inspect the structure of a dataframe using the function "str".
+
 ```{r}
 df <- read.csv("beedata.csv")
 str(df)
 ```
 
 E.g. converting kg to g:
+
 ```{r}
 df$weight_g <- df$weight_kg*1000
 ```
 
 Marking high temperature values:
+
 ```{r}
 df$highTemp <- df$t_i_1>25
 ```
+
 ```{r  echo=F}
 library(knitr)
 kable(head(df[,-(5:9)], n = 5))
 ```
 
 Dealing with the timestamp (nanoseconds to seconds)
+
 ```{r}
 df$time <- as.POSIXct(df$time/1000000000, origin="1970-01-01")
 ```
+
 ```{r  echo=F}
 library(knitr)
 kable(head(df, n = 5))
@@ -613,7 +625,7 @@ kable(head(df, n = 5))
 
 #### Reading data
 
-One easy way to read ascii data in Python is via [Pandas](https://pandas.pydata.org/docs/user_guide/10min.html). Many different formats can be read, e.g. "csv", "txt" or "xlsx". Ideally, you have exactly one line for the header. Data formats can be very divers. However, there are as many [options](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html) to set before reading the data. Make sure to choose the correct separator. 
+One easy way to read ascii data in Python is via [Pandas](https://pandas.pydata.org/docs/user_guide/10min.html). Many different formats can be read, e.g. "csv", "txt" or "xlsx". Ideally, you have exactly one line for the header. Data formats can be very divers. However, there are as many [options](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html) to set before reading the data. Make sure to choose the correct separator.
 
 ```{python}
 # import package
@@ -631,8 +643,8 @@ df.describe()
 
 #### Transforming entire columns
 
-The columns/ variables of a dataframe are called dataseries. Each item of each dataseries is of a specific type. 
-You can inspect the structure of a dataframe using the function "info".
+The columns/ variables of a dataframe are called dataseries. Each item of each dataseries is of a specific type. You can inspect the structure of a dataframe using the function "info".
+
 ```{python}
 # open the data as dataframe 
 df = pd.read_csv('beedata.csv')
@@ -644,6 +656,7 @@ df['weight_kg']
 ```
 
 E.g. converting kg to g:
+
 ```{python}
 df['weight_g'] = df['weight_kg']*1000.
 
@@ -651,12 +664,12 @@ df.head()
 ```
 
 Marking high temperature values:
+
 ```{python}
 df['highTemp'] = df['t_i_1']>25
 ```
 
-Data can have various [date and time](https://docs.python.org/3/library/datetime.html#datetime-objects) formats. Here, we have timesteps of nanoseconds since 1970-01-01.
-Thus, dealing with the timestamp (nanoseconds to seconds)
+Data can have various [date and time](https://docs.python.org/3/library/datetime.html#datetime-objects) formats. Here, we have timesteps of nanoseconds since 1970-01-01. Thus, dealing with the timestamp (nanoseconds to seconds)
 
 ```{python}
 df['time'] = pd.to_datetime(df['time'], unit='ns', origin=pd.Timestamp('1970-01-01'))
@@ -668,26 +681,22 @@ df.info()
 df.head()
 ```
 
+Take care, sometimes you don't get an error, but your data is screwed up anyway: ![sample Data](images/sampleData.png)
 
-Take care, sometimes you don't get an error, but your data is screwed up anyway:
-![sample Data](images/sampleData.png)
 ```{python}
 
 df.head()
 ```
 
-Use the head function to inspect your data. 
-
+Use the head function to inspect your data.
 :::
-
 
 ## Subsetting data
 
 ::: panel-tabset
-
 ### R
 
-You can use squared brackets and boolean expressions to choose lines and columns: df[\<expression to choose lines\>,\<expression to choose columns\>]
+You can use squared brackets and boolean expressions to choose lines and columns: df\[\<expression to choose lines\>,\<expression to choose columns\>\]
 
 Select and plot data from hive 4:
 
@@ -695,48 +704,55 @@ Select and plot data from hive 4:
 df.4 <- df[df$hive==4,]
 plot(df.4$time, df.4$t_o, ylim=c(0,40))
 ```
+
 Select only the first 1000 lines:
+
 ```{r}
 df.4.sub <- df.4[1:1000,]
 plot(df.4.sub$time, df.4.sub$t_o, ylim=c(0,40))
 ```
+
 Delete columns: / Choose only some columns
 
 ```{r}
 names(df)
 df.some <- df[, c(1,2,10)]
 ```
+
 ```{r  echo=F}
 library(knitr)
 kable(head(df.some, n = 5))
 ```
 
-You can also use: 
+You can also use:
+
 ```{r}
 df.same <- df[, c("time", "hive", "weight_kg")]
 ```
+
 ```{r  echo=F}
 library(knitr)
 kable(head(df.same, n = 5))
 ```
-or 
+
+or
+
 ```{r}
 df.or <- df[, -c(3:9,11)]
 ```
+
 ```{r  echo=F}
 library(knitr)
 kable(head(df.or, n = 5))
 ```
 
 #### Useful functions
-- summary
-- head
-- tail
-- sum
-- mean
 
-
-
+-   summary
+-   head
+-   tail
+-   sum
+-   mean
 
 ### Python
 
@@ -754,7 +770,7 @@ import matplotlib.pyplot as plt
 plt.plot(df_4['time'],df_4['t_o'])
 ```
 
-For more plotting options see [https://matplotlib.org/stable/gallery/index.html](https://matplotlib.org/stable/gallery/index.html)
+For more plotting options see <https://matplotlib.org/stable/gallery/index.html>
 
 ```{python}
 fig, ax = plt.subplots()
@@ -766,12 +782,14 @@ plt.show()
 ```
 
 Select only the first 1000 lines:
+
 ```{python}
 df_4_sub = df_4[1:1000]
 
 # combine head and atil and show the first and last 2 rows
 pd.concat([df_4_sub.head(2),df_4_sub.tail(2)])
 ```
+
 Delete columns: / Choose only some columns
 
 ```{python}
@@ -781,22 +799,18 @@ pd.concat([df_some.head(2),df_some.tail(2)])
 ```
 
 #### Useful functions
-- info  
-- head  
-- tail  
-- describe  
-- columns
 
+-   info\
+-   head\
+-   tail\
+-   describe\
+-   columns
 :::
-
-
-
 
 ## Exercises - Data
 
 ::: panel-tabset
-
-### R 
+### R
 
 ```{r eval=F}
 ## Exercises about data types
@@ -827,11 +841,11 @@ trial <- 1
 
 # 3. What are the means of Exp0_OxygenTemp and Exp1_OxygenTemp?
 
-# 4. Save the timestamp in the correct format. The time was measured in seconds. (origin="1970-01-01")
+# 4. Save the timestamp in the correct format in UTC. The time was measured in seconds. (origin="1970-01-01")
 
 # 5. When was the first measurement? When was the last measurement?
 
-# 6. Create a subset containing only data measured after 2019-03-09 10:25:52.
+# 6. Create a subset containing only data measured after 2019-03-09 09:25:52.
 
 # 7. Difficult: Exclude columns, where all measurements are the same. 
 # hint at the bottom of the file
@@ -858,6 +872,9 @@ trial <- 1
 
 ```
 
+### Python
+
+bla
 
 ### R - Solutions
 
@@ -904,23 +921,18 @@ flight$Exp1_OxygenTemp <- flight$Exp1_OxygenTemp/1000
 mean(flight$Exp0_OxygenTemp)
 mean(flight$Exp1_OxygenTemp)
 
-# 4. Save the timestamp in the correct format. The time was measured in seconds.
-flight$timeStamp <- as.POSIXct(flight$timeStamp, origin="1970-01-01")
+# 4. Save the timestamp in the correct format in UTC. The time was measured in seconds.
+flight$timeStamp <- as.POSIXct(flight$timeStamp, origin="1970-01-01", tz = "UTC")
 
 # 5. When was the first measurement? When was the last measurement?
 min(flight$timeStamp)
 max(flight$timeStamp)
 
-# 6. Create a subset containing only data measured after 2019-03-09 10:25:52.
+# 6. Create a subset containing only data measured after 2019-03-09 09:25:52.
 
-# hint: You might have to use "as.POSIXct("2019-03-09 10:25:52")" for the boolean expression.
-
-flight.subtime <- flight[flight$timeStamp>as.POSIXct("2019-03-09 10:25:52"),]
-
-# update: actually this works as well, so no need for as.POSIXct
+flight.subtime <- flight[flight$timeStamp>"2019-03-09 09:25:52",]
 
 
-flight.subtime <- flight[flight$timeStamp>"2019-03-09 10:25:52",]
 
 
 # 7. Difficult: Exclude columns, where all measurements are the same. 
@@ -950,185 +962,19 @@ class(df$t_i_1)
 lapply(df, class)
 
 ```
-
-
-### Python
-
-
-```{python}
-## Exercises about data types
-
-# 1. Create following sequences: 
-# 4, 8, 12, 16, 20, 24, 28
-# 10, 8, 6, 4, 2, 0
-# repeat "chocolate" 10 times in a vector
-
-
-# 2. Starting with the following code, divide a by b and save it as variable c:
-
-a = "5555555"
-b = 3
-
-
-# 3. Starting with following code, create the string/ character vector "group3trial1.csv"
-
-group = 3
-trial = 1
-
-
-## Exercises about data frames
-
-# 1. Read the data "allForarexData.csv"
-
-# 2. Convert Exp0_OxygenTemp and Exp1_OxygenTemp. Devide by 1000. Save the result in the same column.
-
-# 3. What are the means of Exp0_OxygenTemp and Exp1_OxygenTemp?
-
-# 4. Save the timestamp in the correct format. The time was measured in seconds. (origin="1970-01-01")
-
-# 5. When was the first measurement? When was the last measurement?
-
-# if you are unsure whether the data are chronologically sorted
-
-# 6. Create a subset containing only data measured after 2019-03-09 09:25:52.
-
-# 7. Difficult: Exclude columns, where all measurements are the same. 
-```
-Hint: there is a function called [nunique](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.nunique.html)
-```{python}
-## Exercises about both data frames and data types
-
-# Use beedata.csv
-
-# 1. Select the lines of the bee data set where the hive number is 13 or 14.
-
-# 2. What are the classes of the beedata's columns hive and t_i_1?
-
-# 3. Difficult: How can you print the classes of all columns?
-
-
-```
-
-
-### Python - Solutions
-
-
-```{python}
-## Exercises about data types
-
-# 1. Create following sequences: 
-# 4, 8, 12, 16, 20, 24, 28
-# 10, 8, 6, 4, 2, 0
-# repeat "chocolate" 10 times in a vector
-
-sequence = list(range(4, 29, 4))
-print(sequence)
-
-sequence = list(range(10, -1, -2))
-print(sequence)
-
-words = ["chocolate"] * 10
-print(words)
-
-
-# 2. Starting with the following code...:
-
-a = "5555555"
-b = 3
-
-c = int(a) / b
-print(c)
-
-
-# 3. Starting with following code, create the filename "group3trial1.csv"
-
-group = 3
-trial = 1
-
-filename = "group" + str(group) + "trial" + str(trial) + ".csv"
-print(filename)
-
-
-## Exercises about data frames
-
-# 1. Read the data "allForarexData.csv"
-
-# import package
-import pandas as pd
-
-# open the data as dataframe 
-df = pd.read_csv('/isibhv/projects/p_pangaea_proces/kriemann/python/2025_informatica/allForarexData.csv')
-
-# use head function to see the first 5 rows of the dataframe
-df.head()
-
-# 2. Convert Exp0_OxygenTemp and Exp1_OxygenTemp. Devide by 1000. Save the result in the same column.
-df['Exp0_OxygenTemp'] = df['Exp0_OxygenTemp']/1000.
-df['Exp1_OxygenTemp'] = df['Exp1_OxygenTemp']/1000.
-
-# 3. What are the means of Exp0_OxygenTemp and Exp1_OxygenTemp?
-print(df['Exp0_OxygenTemp'].mean())
-print(df['Exp1_OxygenTemp'].mean())
-
-# 4. Save the timestamp in the correct format. The time was measured in seconds. (origin="1970-01-01")
-df['timeStamp'] = pd.to_datetime(df['timeStamp'], unit='s', origin=pd.Timestamp('1970-01-01'))
-df.head()
-
-# 5. When was the first measurement? When was the last measurement?
-
-# if you are unsure whether the data are chronologically sorted
-df = df.sort_values(by=['timeStamp'], ascending=True)
-
-df.head(1)
-df.tail(1)
-
-# 6. Create a subset containing only data measured after 2019-03-09 09:25:52.
-
-df_subtime = df[df['timeStamp']>'2019-03-09 09:25:52']
-df_subtime.head()
-
-# 7. Difficult: Exclude columns, where all measurements are the same. 
-```
-hint: there is a function called [nunique](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.nunique.html)
-```{python}
-constant_columns = [col for col in df.columns if df[col].nunique() == 1]
-
-print("Constant columns:", constant_columns)
-
-df_sub = df.drop(constant_columns, axis=1)
-
-## Exercises about both data frames and data types
-
-# Use beedata.csv
-
-# 1. Select the lines of the bee data set where the hive number is 13 or 14.
-filtered_df = df[(df['hive'] == 13) | (df['hive'] == 14)]
-filtered_df.head()
-
-# 2. What are the classes of the beedata's columns hive and t_i_1?
-
-# 3. Difficult: How can you print the classes of all columns?
-
-# This is not at all difficult in python:
-df.info()
-
-```
-
-
 :::
 
 ## Conditions - If and Else
 
-
 ::: panel-tabset
-
 ### R
 
 #### If
 
-![](images/if.png){width=75%}
+![](images/if.png){width="75%"}
 
 Simple if:
+
 ```{r}
 a <- 19
 if(a >= 18){
@@ -1138,8 +984,7 @@ if(a >= 18){
 
 if and else:
 
-![](images/ifelse.png){width=75%}
-
+![](images/ifelse.png){width="75%"}
 
 ```{r}
 goodWeather <- TRUE
@@ -1151,11 +996,9 @@ if (goodWeather){
 
 ```
 
+Else-if:
 
-Else-if: 
-
-![](images/elseif.png){width=75%}
-
+![](images/elseif.png){width="75%"}
 
 ```{r}
 
@@ -1171,11 +1014,9 @@ if (do.you.want.this == "chocolate"){
 }
 ```
 
-
 ```{r include=F}
 library(lubridate)
 ```
-
 
 ```{r}
 library(lubridate)
@@ -1192,16 +1033,16 @@ if (what.do.you.want.to.know == "year"){
 }
 ```
 
-
 ### Python
 
 #### If
 
-![](images/if.png){width=75%}
-  
-**Note:** *if*, *else*, etc. do not use (),{} or [] to mark its beginning and endings. Python uses indentations.
+![](images/if.png){width="75%"}
+
+**Note:** *if*, *else*, etc. do not use (),{} or \[\] to mark its beginning and endings. Python uses indentations.
 
 Simple if:
+
 ```{python}
 a = 19
 if a >= 18:
@@ -1210,8 +1051,7 @@ if a >= 18:
 
 if and else:
 
-![](images/ifelse.png){width=75%}
-
+![](images/ifelse.png){width="75%"}
 
 ```{python}
 goodWeather = True
@@ -1222,11 +1062,9 @@ else:
 
 ```
 
+elif (short for else if):
 
-elif (short for else if): 
-
-![](images/elseif.png){width=75%}
-
+![](images/elseif.png){width="75%"}
 
 ```{python}
 
@@ -1241,7 +1079,6 @@ else:
     print("Hm, not sure. Do you have chocolate?")
 
 ```
-
 
 ```{python}
 from datetime import datetime
@@ -1258,21 +1095,14 @@ else:
     print("Sorry, what do you want to know?")
 
 ```
-
 :::
-
-
 
 ## For and While
 
-
 ::: panel-tabset
-
 ### R
 
-
 #### For
-
 
 ```{r}
 ages <- c(31, 29, 5)
@@ -1332,13 +1162,10 @@ for(i in 1:length(to.analyse)){
 }
 ```
 
-
-
-![](images/for.png){width=75%}
-
-
+![](images/for.png){width="75%"}
 
 #### While
+
 ```{r}
 a <- 2
 while (a<1000){
@@ -1347,10 +1174,10 @@ while (a<1000){
 }
 ```
 
-
-![](images/while.png){width=75%}
+![](images/while.png){width="75%"}
 
 #### Do-while
+
 ```{r}
 a <- 10
 repeat{
@@ -1363,6 +1190,7 @@ repeat{
 ```
 
 bad example for Do-while:
+
 ```{r}
 a <- 10
 repeat{
@@ -1373,7 +1201,9 @@ repeat{
   }
 }
 ```
+
 because it breaks for edge cases:
+
 ```{r error=TRUE}
 a <- -10
 repeat{
@@ -1385,22 +1215,19 @@ repeat{
 }
 ```
 
-
-
-![](images/do-while.png){width=75%}
+![](images/do-while.png){width="75%"}
 
 #### For vs. While
-- if you do not know the number of iterations needed, use while
-- else, always use for!
-- it is easier to create a while-loop that never stops, than creating a for-loop that never stops.
 
+-   if you do not know the number of iterations needed, use while
+-   else, always use for!
+-   it is easier to create a while-loop that never stops, than creating a for-loop that never stops.
 
-
-### Python 
+### Python
 
 #### For
 
-**Note:** *for*, *while*, etc. do not use (),{} or [] to mark its beginning and endings. Python uses indentations.
+**Note:** *for*, *while*, etc. do not use (),{} or \[\] to mark its beginning and endings. Python uses indentations.
 
 ```{python}
 ages = [31, 29, 5]
@@ -1412,6 +1239,7 @@ print(total_age)
 ```
 
 same as:
+
 ```{python}
 ages = [31, 29, 5]
 total_age = 0
@@ -1476,13 +1304,10 @@ for i in to_analyse:
 
 ```
 
-
-
-![](images/for.png){width=75%}
-
-
+![](images/for.png){width="75%"}
 
 #### While
+
 ```{python}
 a = 2
 while (a<1000):
@@ -1491,10 +1316,10 @@ while (a<1000):
 
 ```
 
-
-![](images/while.png){width=75%}
+![](images/while.png){width="75%"}
 
 #### Do-while
+
 ```{python}
 import math
 
@@ -1508,6 +1333,7 @@ while True:
 ```
 
 bad example for Do-while:
+
 ```{python}
 import math
 
@@ -1518,6 +1344,7 @@ while True:
     if a < 0:
         break
 ```
+
 because it breaks for edge cases:
 
 ```{python}
@@ -1536,25 +1363,19 @@ while True:
 
 ```
 
-
-
-![](images/do-while.png){width=75%}
+![](images/do-while.png){width="75%"}
 
 #### For vs. While
-- if you do not know the number of iterations needed, use while
-- else, always use for!
-- it is easier to create a while-loop that never stops, than creating a for-loop that never stops.
 
-
-
+-   if you do not know the number of iterations needed, use while
+-   else, always use for!
+-   it is easier to create a while-loop that never stops, than creating a for-loop that never stops.
 :::
 
 ## Exercises - Conditions, For and While
 
 ::: panel-tabset
-
 ### R
-
 
 ```{r eval=F}
   
@@ -1654,7 +1475,6 @@ s1
 
 
 ```
-
 
 ### Python
 
@@ -1900,25 +1720,24 @@ combine.trycatch <- function(dir="forarexData/", finalName="forarexCombined.csv"
 combine.trycatch()
 
 ```
-
-
 :::
 
 ## Writing own functions
 
 ::: panel-tabset
-
 ### R
 
-
 The basic syntax to write functions looks like this:
+
 ```{r}
 myPlus <- function(a, b){
   return(a + b)
 }
 myPlus(1,2)
 ```
+
 You can use default parameters:
+
 ```{r}
 myPlus <- function(a=1, b=1){
   return(a + b)
@@ -1926,7 +1745,9 @@ myPlus <- function(a=1, b=1){
 myPlus(1,2)
 myPlus()
 ```
+
 If you want to return multiple values, you can use a named list:
+
 ```{r}
 dataframe.info <- function(df){
   cells.count <- ncol(df)*nrow(df)
@@ -1935,12 +1756,10 @@ dataframe.info <- function(df){
 dataframe.info(df)
 ```
 
-
-
 ### Python
 
-
 The basic syntax to write functions looks like this:
+
 ```{python}
 def myPlus(a, b):
     c = a+b
@@ -1950,6 +1769,7 @@ myPlus(1,2)
 ```
 
 You can use default parameters:
+
 ```{python}
 def myPlus(a=1, b=1):
     c = a+b
@@ -1975,20 +1795,14 @@ df = pd.read_csv('beedata.csv')
 
 dataframe_info(df)
 ```
-
 :::
-
-
-
 
 ## Debugging
 
 ::: panel-tabset
-
 ### R
 
 Here is a buggy version of the function “funny.words.”
-
 
 ```{r}
 funny.words <- function(s = "summer", count = 3){
@@ -2007,7 +1821,6 @@ funny.words()
 funny.words("banana", 5)
 ```
 
-
 Since this code consists of a function and a loop, we cannot run line by line to find the mistakes. However, we can create breakpoints by clicking next to the line numbering (left).
 
 ![](images/debugging.jpeg)
@@ -2020,18 +1833,16 @@ In the console, there will be a new set of buttons:
 
 ![](images/buttons.jpeg)
 
-
-- If you click on Next, R will execute the next line. (e.g. line 6)
-- If you click on the second button, R will step in the current function call, so it will basically jump into an other function. (e.g. into the print function)
-- If you click on the third button, R will execute the rest of the current function or loop. (e.g. line 6 and 7)
-- If you click on “continue”“, R will run until we come across the next breakpoint. (e.g. in the next round of the loop or in line 10)
-- If you click on “Stop”, R will exit the debug mode.
-
+-   If you click on Next, R will execute the next line. (e.g. line 6)
+-   If you click on the second button, R will step in the current function call, so it will basically jump into an other function. (e.g. into the print function)
+-   If you click on the third button, R will execute the rest of the current function or loop. (e.g. line 6 and 7)
+-   If you click on “continue”“, R will run until we come across the next breakpoint. (e.g. in the next round of the loop or in line 10)
+-   If you click on “Stop”, R will exit the debug mode.
 
 ### Python
 
-Here is a buggy version of the function “funny_words.”. We are using the package *ipdb* for debugging.  
-Implement `ipdb.set_trace()` into the function to set a *[Breakpoint](https://www.geeksforgeeks.org/python/how-to-add-a-breakpoint-in-jupyter-notebook/)* in the execution of the loop. You can step through the code and print out variables. 
+Here is a buggy version of the function “funny_words.”. We are using the package *ipdb* for debugging.\
+Implement `ipdb.set_trace()` into the function to set a [*Breakpoint*](https://www.geeksforgeeks.org/python/how-to-add-a-breakpoint-in-jupyter-notebook/) in the execution of the loop. You can step through the code and print out variables.
 
 ```{python}
 
@@ -2051,7 +1862,9 @@ def funny_words(s = "summer", count = 3):
     return s1
 
 ```
-try out: 
+
+try out:
+
 ```{python}
 funny_words()
 ```
@@ -2064,19 +1877,14 @@ funny_words("banana", 5)
 
 ![](images/example_debugging_python.png)
 
-You can use the following debugging commands to e.g. print variables or continue the loop until the next breakpoint:  
-- p <variable_name>: print the value of a variable  
-- c: continue to the next breakpoint  
-- n: move to the next line of code  
+You can use the following debugging commands to e.g. print variables or continue the loop until the next breakpoint:\
+- p <variable_name>: print the value of a variable\
+- c: continue to the next breakpoint\
+- n: move to the next line of code\
 - q: quit the debugging session
 
-
 ![](images/example_debugging_python2.png)
-
-
 :::
-
-
 
 ## Piping
 
@@ -2096,7 +1904,6 @@ sqrt(x)
 x %>% sqrt
 
 ```
-
 
 In case you want to update x, you can use:
 
@@ -2122,22 +1929,22 @@ df %>% subset(hive==4) %>% nrow
 
 ```
 
+# PANGAEA - downloading data
 
-# PANGAEA - downloading data 
 link to slides will follow
 
 # Data Cleaning
+
 link to scripts will follow
 
 # Statistics
 
 ## First Step: Look at your data (Descriptive Statistics)
 
-- What is your response variable?
-- Plot your data
-  * Plot raw data
-  * Frequency distribution
-  -> Are there any patterns?
+-   What is your response variable?
+-   Plot your data
+    -   Plot raw data
+    -   Frequency distribution -\> Are there any patterns?
 
 ## Definition - Simple Linear Regression
 
@@ -2145,8 +1952,7 @@ $$
 \begin{equation}
 y_i = \beta_0 + \beta_1x_i  + \epsilon_i, \qquad   i=1,...,n
 \end{equation}
-$$
-where $y$ is the dependent variable, $x$ is the independent variable (also called explanatory variable),  $\beta_0$ is the intercept parameter, $\beta_1$ is the slope parameter and $\epsilon\sim N(0,\sigma^2)$ is the error coefficient.
+$$ where $y$ is the dependent variable, $x$ is the independent variable (also called explanatory variable), $\beta_0$ is the intercept parameter, $\beta_1$ is the slope parameter and $\epsilon\sim N(0,\sigma^2)$ is the error coefficient.
 
 ## Sample data
 
@@ -2178,32 +1984,36 @@ ggplot(mapping= aes(x, y)) +
 
 ## Overall check for assumptions
 
-
 ```{r}
 plot(mod)
 ```
+
 Produces series of graphs (first two are the most important)
-		
+
 ### 1st graph: Constancy of variance
-			Plot of the residuals against the fitted values
-			→ Should look like the sky at night
-			
+
+```         
+        Plot of the residuals against the fitted values
+        → Should look like the sky at night
+        
+```
+
 ### 2nd graph: Normality of errors
-Normal QQ plot = plot of the ordered residuals against the fitted values
-			→ Should be a reasonably straight line
-			
+
+Normal QQ plot = plot of the ordered residuals against the fitted values → Should be a reasonably straight line
+
 ## Linear Model - Assumptions
 
-- Linear relationship between x and y
-- Independence of residuals
-- Constant variance of residuals
-- Normality: Residuals are normally distributed
+-   Linear relationship between x and y
+-   Independence of residuals
+-   Constant variance of residuals
+-   Normality: Residuals are normally distributed
 
 ## Assumption 1 - Linear Relationship
 
-- use a scatterplot to check
-- if this assumption is violated we have unrealistic predictions and estimates of the standard deviation
-- How to deal with this? You can transform the variables or alter the model.
+-   use a scatterplot to check
+-   if this assumption is violated we have unrealistic predictions and estimates of the standard deviation
+-   How to deal with this? You can transform the variables or alter the model.
 
 ```{r}
 plot(x,y)
@@ -2211,31 +2021,34 @@ plot(x,y)
 
 ## Assumption 2 - Independence of Residuals
 
-- Plot residuals in time/ observation order / based on observation location / ...
-- You expect that they are equally scattered around 0 
-- You can also use the Durban-Watson-Test
-- Autocorrelation can have serious effects on the model
-- You can add an AR correlation term to the model. Sometimes it also helps to add a further covariate.
+-   Plot residuals in time/ observation order / based on observation location / ...
+-   You expect that they are equally scattered around 0
+-   You can also use the Durban-Watson-Test
+-   Autocorrelation can have serious effects on the model
+-   You can add an AR correlation term to the model. Sometimes it also helps to add a further covariate.
+
 ```{r}
 res <- residuals(mod)
 plot(x, res)
 ```
 
 ## Durban-Watson-Test
-- H0: There is no correlation among the residuals.
 
-- HA: The residuals are autocorrelated.
+-   H0: There is no correlation among the residuals.
+
+-   HA: The residuals are autocorrelated.
 
 ```{r}
 library(car)
 durbinWatsonTest(mod)
 ```
 
-- The p-value is larger than 0.05, so we cannot reject the null hypothesis that there is no correlation between residuals.
+-   The p-value is larger than 0.05, so we cannot reject the null hypothesis that there is no correlation between residuals.
 
 ## Assumption 3 - Constant variance or errors
-- Plot fitted values vs residuals
-- You expect that they are equally scattered around 0 
+
+-   Plot fitted values vs residuals
+-   You expect that they are equally scattered around 0
 
 ```{r}
 plot(fitted(mod),res)
@@ -2243,9 +2056,9 @@ plot(fitted(mod),res)
 
 ## Assumption 4 - Normality of Residuals
 
-- Use qq-plot to compare quantiles.
-- Or use the Shapiro-Wilk-Test
-- If you do not find a Normal Distribution, check for outliers or transform your variable.
+-   Use qq-plot to compare quantiles.
+-   Or use the Shapiro-Wilk-Test
+-   If you do not find a Normal Distribution, check for outliers or transform your variable.
 
 ```{r}
 qqPlot(res)
@@ -2253,77 +2066,65 @@ qqPlot(res)
 
 ## Shapiro-Wilk-Test for Normality
 
-- H0: The data is normally distributed
-- HA: The data comes from an other distribution
+-   H0: The data is normally distributed
+-   HA: The data comes from an other distribution
 
 ```{r}
 shapiro.test(res)
 ```
-- We cannot reject the null-hypothesis that the data is normally distributed. 
+
+-   We cannot reject the null-hypothesis that the data is normally distributed.
 
 ## If model doesn’t seem to fit your data:
 
 ### Is your response really continuous?
 
-If not another model might be more appropriate:
-- Continuous: linear model → LM
-		e.g. height, weight
-- Count: Poisson model → GLM
-		e.g. number of individuals
-- Binary: Binomial model → GLM
-		e.g. presence / absence
+If not another model might be more appropriate: - Continuous: linear model → LM e.g. height, weight - Count: Poisson model → GLM e.g. number of individuals - Binary: Binomial model → GLM e.g. presence / absence
 
 ### Are there obvious patterns?
 
-For example many zeros:
-You could separate in two analysis: Binomial model for success / failure and linear model for successes
+For example many zeros: You could separate in two analysis: Binomial model for success / failure and linear model for successes
 
 ### Are there outliers that should be omitted?
-4th graph of plot(model): Plot of Cook´s distances versus raw data
-→ Highlights the identity of particularly influential data points
+
+4th graph of plot(model): Plot of Cook´s distances versus raw data → Highlights the identity of particularly influential data points
 
 ### Relationship not a straight line?
+
 Polynomial regression e.g. a quadratic function might be an option
-	
+
 ```{r eval=F}
  lm(y ~ x + I(x^2))
 ```
 
 ### Transformation
+
 You could for example use a log transformation of the response variable
 
 ```{r eval=FALSE}
 	lm(log(y) ~ x)
 ```
 
-
-
 ### Are there other explanatory variables that you should include?
 
 SHOW ON PENGUIN EXAMPLE (include species as categorical variable)
-
 
 ## Definition - Linear Model with multiple predictors
 
 $$\begin{equation}\label{eqn:linearregression}
 y_i = \beta_0 + \beta_1x_{1,i} + ... + \beta_px_{p,i} + \epsilon_i, \qquad   i=1,...,n
-\end{equation}$$
-where $y$ is the dependent variable, $x_1 ... x_p$ are the independent variables (also called explanatory variables),  $\beta_0 ... \beta_p$ are the regression coefficients, $\epsilon\sim N(0,\sigma^2)$ is the error coefficient  and $p \geq 1$.
+\end{equation}$$ where $y$ is the dependent variable, $x_1 ... x_p$ are the independent variables (also called explanatory variables), $\beta_0 ... \beta_p$ are the regression coefficients, $\epsilon\sim N(0,\sigma^2)$ is the error coefficient and $p \geq 1$.
 
 ## The penguin data set
 
-
-![](images/penguins.png)
-Artwork by @allison_horst
+![](images/penguins.png) Artwork by @allison_horst
 
 Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. R package version 0.1.0. https://allisonhorst.github.io/palmerpenguins/. doi: 10.5281/zenodo.3960218.
-
 
 ::: panel-tabset
 ### R
 
-
-[https://allisonhorst.github.io/palmerpenguins/](https://allisonhorst.github.io/palmerpenguins/)
+<https://allisonhorst.github.io/palmerpenguins/>
 
 ```{r}
 library(palmerpenguins)
@@ -2332,7 +2133,7 @@ head(penguins)
 
 ### Python
 
-[https://github.com/mcnakhaee/palmerpenguins?tab=readme-ov-file](https://github.com/mcnakhaee/palmerpenguins?tab=readme-ov-file)
+<https://github.com/mcnakhaee/palmerpenguins?tab=readme-ov-file>
 
 ```{python}
 from palmerpenguins import load_penguins
@@ -2344,10 +2145,9 @@ penguins.head()
 
 ## Exercise
 
-1. Using the penguin data set, fit a linear model to determine the relationship between the body mass index and the flipper length.
+1.  Using the penguin data set, fit a linear model to determine the relationship between the body mass index and the flipper length.
 
-2. The flipper length differs accross penguin species. How could you add this to your model?
-
+2.  The flipper length differs accross penguin species. How could you add this to your model?
 
 ### Solution
 
@@ -2372,7 +2172,6 @@ summary(mod)
 
 Check linear relationship:
 
-
 ```{r}
 plot(x,y)
 ```
@@ -2388,25 +2187,20 @@ library(car)
 durbinWatsonTest(mod)
 ```
 
-
 Check constant variance or errors
 
 ```{r}
 plot(fitted(mod),res)
 ```
 
-
-
-
-
 Check Normality of Residuals
+
 ```{r}
 qqPlot(res)
 hist(res)
 
 shapiro.test(res)
 ```
-
 
 Fit a new model to consider penguin species as well.
 
@@ -2446,19 +2240,17 @@ legend("topright", legend=c(1, 2, 3, 4, 5, "outside"),
 
 ### Points or Lines? (type)
 
-- “p”: Points
-- “l”: Lines
-- “b”: Both
+-   “p”: Points
+-   “l”: Lines
+-   “b”: Both
 
 ### Line type (lty)
 
 ![http://www.sthda.com/english/wiki/line-types-in-r-lty](images/linetypes.png)
 
-Source: [http://www.sthda.com/english/wiki/line-types-in-r-lty](http://www.sthda.com/english/wiki/line-types-in-r-lty)
-### Point types (pch)
-![http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r](images/dottypes.png)
+Source: <http://www.sthda.com/english/wiki/line-types-in-r-lty> \### Point types (pch) ![http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r](images/dottypes.png)
 
-Source: [http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r](http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r)
+Source: <http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r>
 
 ## ggplot
 
@@ -2478,7 +2270,6 @@ ggplot(data = mdf, aes(x=time, y=value)) + geom_line(aes(colour=variable)) + yli
 ## Exercises - Plotting and more
 
 ::: panel-tabset
-
 ### R
 
 ```{r eval = F}
@@ -2580,7 +2371,6 @@ x %>% sqrt %>% sum %>% round(3)
 # Try to transform the code using loops and functions
 
 ```
-
 :::
 
 # R-Markdown
@@ -2589,7 +2379,7 @@ R-Markdown is a great way to document your code and to write reports about your 
 
 ## Output formats
 
-The three most common output options for R-Markdown are html, pdf and word documents. If you want to create pdf documents, tex needs to be installed. 
+The three most common output options for R-Markdown are html, pdf and word documents. If you want to create pdf documents, tex needs to be installed.
 
 ![](images/rmarkdown.jpeg)
 
@@ -2617,7 +2407,6 @@ output: word_document
 
 ```
 
-
 There are many formatting options which you can specify in the header. This might be useful options for html:
 
 ```{r eval=F}
@@ -2638,7 +2427,6 @@ output:
 ---
 ```
 
-
 ## Document structure
 
 If you create a new R-Markdown document, R will automatically create a sample document. You can see that “#” can be used to create headers:
@@ -2651,14 +2439,12 @@ If you create a new R-Markdown document, R will automatically create a sample do
 ### Header 3
 ```
 
-
-
 ## Code blocks
 
 For code blocks you have many options, too. The two most important are:
 
-- eval: If set to true, the code will be executed
-- echo: If set to true, the output will be printed/ plotted
+-   eval: If set to true, the code will be executed
+-   echo: If set to true, the output will be printed/ plotted
 
 ## Lists
 
@@ -2676,18 +2462,15 @@ For code blocks you have many options, too. The two most important are:
 
 ```
 
-* unordered list
-    + sub-item 1
-    + sub-item 2
-        - sub-sub-item 1
-* item 2
+-   unordered list
+    -   sub-item 1
+    -   sub-item 2
+        -   sub-sub-item 1
+-   item 2
 
-    
-1. ordered list
-2. item 2
-    i) sub-item 1
-
-
+1.  ordered list
+2.  item 2
+    i)  sub-item 1
 
 ## Insert an image
 
@@ -2697,32 +2480,73 @@ For code blocks you have many options, too. The two most important are:
 
 ## Further documentation
 
-A good documentation of R-Markdown can be found here: [https://bookdown.org/yihui/rmarkdown/](https://bookdown.org/yihui/rmarkdown/)
+A good documentation of R-Markdown can be found here: <https://bookdown.org/yihui/rmarkdown/>
 
-And here is a cheat sheet: 
-[https://www.rstudio.com/resources/cheatsheets/#rmarkdown](https://www.rstudio.com/resources/cheatsheets/#rmarkdown)
+And here is a cheat sheet: <https://www.rstudio.com/resources/cheatsheets/#rmarkdown>
 
-There is a lot more you can do with R-Markdown, see:
-[https://rmarkdown.rstudio.com/gallery.html](https://rmarkdown.rstudio.com/gallery.html)
+There is a lot more you can do with R-Markdown, see: <https://rmarkdown.rstudio.com/gallery.html>
+
+# Assignment
+
+
+- you all get a confirmation of participation
+- you can submit a small assignment for 1 CP
+
+
+## Assignment
+
+- you can choose if you want to use R or Python
+- Create a markdown document 
+- Choose a dataset from PANGEA
+- Think about the following question: What do you want fo find out? What is the motivation for your analysis?
+- Choose 5 of the following tasks. You can also come up with own ideas.
+- Write a short text for each task explaining what you have been doing
+
+
+## Ideas
+
+- Make some exploratory analysis:
+    + print the mean/ median/ standard deviation for each column
+    + print the total number of missing values
+    + print the number of missing values for each column
+- Transform some of the columns/ Create new columns based on existing ones
+- Create a subset of your data
+- Exclude all rows with missing values
+- Create a plot
+- Write a function that takes a filename and some additional parameters. The function should create a plot and save it as “png” with that filename
+- Create a linear model
+
+## Send us an e-mail
+
+- If you want to do an assignment, please send us an e-mail:
+
+- "I want to do an assignment.""
+- "I do not want a grade on my certificate. / I want to have a grade on my certificate./
+I want to have a grade if it is better than <1.3, 1.7, 2.0, 2.3, 2.7, 3.0, ...>"
 
 
 # Short statistical breaks
 
 ## Dinosours
 
-[https://www.autodeskresearch.com/publications/samestats](https://www.autodeskresearch.com/publications/samestats)
+<https://www.autodeskresearch.com/publications/samestats>
 
 ## Correlation
-[https://www.tylervigen.com/spurious-correlations](https://www.tylervigen.com/spurious-correlations)
+
+<https://www.tylervigen.com/spurious-correlations>
 
 ## Beginners Book
-[https://devhumor.com/content/uploads/images/July2020/Best-Programming-Book-for-Beginners-Comic---Art-of-Searching-on-Google.png](https://devhumor.com/content/uploads/images/July2020/Best-Programming-Book-for-Beginners-Comic---Art-of-Searching-on-Google.png)
+
+<https://devhumor.com/content/uploads/images/July2020/Best-Programming-Book-for-Beginners-Comic---Art-of-Searching-on-Google.png>
 
 <!-- # Linear Model -->
-<!-- sub <- df[df$t_o<50 & df$t_o>-10,] -->
-<!-- plot(sub$h, sub$t_o) -->
-<!-- mod <-lm(sub$h~ sub$t_o) -->
-<!-- summary(mod) -->
 
+<!-- sub <- df[df$t_o<50 & df$t_o>-10,] -->
+
+<!-- plot(sub$h, sub$t_o) -->
+
+<!-- mod <-lm(sub$h~ sub$t_o) -->
+
+<!-- summary(mod) -->
 
 <!-- wir, kolja, micha und ralf -->

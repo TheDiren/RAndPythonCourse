@@ -2750,6 +2750,10 @@ The model with the interaction term between flipper length and species improves 
 
 ## Standard library
 
+::: panel-tabset
+### R
+
+
 ```{r}
 # subset data
 df.4 <- df[df$hive==4,]
@@ -2782,7 +2786,31 @@ Source: <http://www.sthda.com/english/wiki/line-types-in-r-lty> \### Point types
 
 Source: <http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r>
 
-## ggplot
+### Python
+
+
+```{python eval = F}
+# subset beedata.csv
+
+df_4 = df[df['hive']==4]
+
+# plot temperature outside
+ax = df_4.plot(x='time', y='t_o', kind='scatter', marker='x')
+ax.set_ylim(0, 40)
+```
+The standard plotting of pandas is rather limited. To do the plot shown under *R*, you need to use [Matplotlib](https://matplotlib.org/stable/users/explain/quick_start.html). 
+
+![](images/python_standard_plot.png)
+
+
+:::
+
+
+## R: ggplot and Python: Matplotlib
+You can do similar plots in R and python. Widely used packages are ggplot for R and Matplotlib for python. However, the syntax differs sometimes greatly, so that comparing plotting routines is not really useful.
+
+::: panel-tabset
+### R
 
 ```{r}
 # subset data
@@ -2797,14 +2825,54 @@ library(ggplot2)
 ggplot(data = mdf, aes(x=time, y=value)) + geom_line(aes(colour=variable)) + ylim(c(0, 40))
 ```
 
+### Python
+
+```{python eval = F}
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+
+# convert time from ns to datetime format for the axis label
+df['time'] = pd.to_datetime(df['time'], unit='ns', origin=pd.Timestamp('1970-01-01'))
+
+# Subset data
+df_4 = df[df['hive'] == 4]
+
+# colors similar to rainbow(5) in R
+colors = plt.cm.rainbow(np.linspace(0, 1, 5))
+
+# select columns
+cols = df_4.columns[3:8]
+
+plt.figure(figsize=(10, 6))
+
+# plot temperature outside
+plt.scatter(df_4['time'], df_4['t_o'], color='black', marker='x', label='outside')
+
+# plot all other temperatures
+for i, col in enumerate(cols):
+    plt.scatter(df_4['time'], df_4[col], color=colors[i], marker='x', label=str(i+1))
+
+plt.ylim(0, 40)
+plt.legend(loc='upper right', fontsize=8)
+plt.xlabel('time')
+plt.ylabel('Temperature')
+plt.show()
+
+```
+![](images/matplotlib_plot.png)
+:::
+
+
+
+
 ## Exercises - Plotting and more
 
 ::: panel-tabset
+
 ### R
 
 ```{r eval = F}
-
-
 ## Plotting
 
 # 1. Choose a set of data from your background. 
@@ -2847,9 +2915,6 @@ round(sum(sqrt(x)), 3)
 # Try to transform the code using loops and functions
 
 ```
-
-### Python
-
 ### R - Solutions
 
 ```{r eval= FALSE}
@@ -2901,6 +2966,75 @@ x %>% sqrt %>% sum %>% round(3)
 # Try to transform the code using loops and functions
 
 ```
+
+### Python
+```{python eval = F}
+## Plotting
+
+# 1. Choose a set of data from your background. 
+# Decide for one of the presented plotting-libraries.
+# Create a plot and add a title and custom x and y labels.
+# In case you plotted multiple lines, add a legend.
+# Difficult: Try to find out, how you can change the fontsize of the axis-labels.
+
+# 2. Automatically save your plot to a given destination  
+
+# 3. Try to make your code more abstract and useful. 
+# Put your code within a function.
+# - use the file-name (destination) as a parameter
+# - In case you have multiple covariate, 
+# use the covariate(s) to be plotted as input parameter
+# - In case it makes sense to subset your data, introduce
+#    a parameter for the choice of the subset.
+
+# Always have in mind: if something goes wrong, you can use debugging.
+
+# Exercises - Piping
+
+=> There is no piping in python!
+
+## Loops and functions again
+# If you have some code you wrote in the past 
+# for some exercise, for your studies, for your work...
+# See if you can find pieces of code which you 
+# just copied and pasted multiple times (don't worry, this is normal)
+# Try to transform the code using loops and functions
+```
+
+### Python - Solutions
+```{python eval = F}
+## Plotting
+
+# 1. Choose a set of data from your background. 
+# Decide for one of the presented plotting-libraries.
+# Create a plot and add a title and custom x and y labels.
+# In case you plotted multiple lines, add a legend.
+# Difficult: Try to find out, how you can change the fontsize of the axis-labels.
+
+# 2. Automatically save your plot to a given destination  
+
+# 3. Try to make your code more abstract and useful. 
+# Put your code within a function.
+# - use the file-name (destination) as a parameter
+# - In case you have multiple covariate, 
+# use the covariate(s) to be plotted as input parameter
+# - In case it makes sense to subset your data, introduce
+#    a parameter for the choice of the subset.
+
+# Always have in mind: if something goes wrong, you can use debugging.
+
+# Exercises - Piping
+
+=> There is no piping in python!
+
+## Loops and functions again
+# If you have some code you wrote in the past 
+# for some exercise, for your studies, for your work...
+# See if you can find pieces of code which you 
+# just copied and pasted multiple times (don't worry, this is normal)
+# Try to transform the code using loops and functions
+```
+
 :::
 
 # Markdown and R-Markdown

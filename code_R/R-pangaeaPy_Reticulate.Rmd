@@ -1,0 +1,246 @@
+---
+title: "PangaeaPy with Reticulate"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This script based on Downloading_and_manipulating_PANGAEA_data.ipnb by Kathrin Riemann-Campe will provide examples of search and retrieval of diverse earth- and environmental data and its metadata from the PANGAEA data repository using R in connection with Python, using the Reticulate pacakge. [PangaeaPy package](https://pypi.org/project/pangaeapy/), version 1.0.22, is used to facilitate the metadata search. Check out our Wiki for further details on searching data in PANGAEA.
+
+```{r}
+# Load reticulate and set Python environment
+library(reticulate)
+
+# Use the Conda environment named "workshop"
+#use_condaenv("workshop", required = TRUE)
+
+# Verify the Python configuration
+py_config()
+
+# Use a specific Python version if needed
+# Adjust the path to the Python executable on your system
+# use_python("/path/to/your/python")
+
+# Automatically find a compatible Python version
+# use_condaenv("base", required = TRUE)  # Use base Conda environment (if using Anaconda)
+
+```
+
+## Import libraries
+
+```{python}
+import os
+import pandas as pd
+import numpy as np
+from collections import Counter
+import requests 
+```
+
+PANGAEApy
+
+```{python}
+
+## if you need to install PANGAEApy use pip
+#!pip install pangaeapy # Uncomment to upgrade pangaeapy
+
+## if you need to upgrade PANGAEApy use 
+#!pip install pangaeapy --upgrade # Uncomment to upgrade pangaeapy
+
+## check version of PANGAEApy
+# !pip show pangaeapy
+
+## for details see https://pypi.org/project/pangaeapy/ 
+
+import pangaeapy as pan
+from pangaeapy.pandataset import PanDataSet
+```
+
+## Query PANGAEA with 1 keyword
+
+```{python}
+query = pan.PanQuery('project:label:PAGES_C-PEAT')
+### compare with https://pangaea.de/?q=Geochemistry
+```
+
+```{python}
+### query is a PANGAEApy object with built in objects
+print(query)
+```
+
+```{python}
+### you can ask the following attributes
+## totalcount, error, query, result
+print(query.query)
+print(query.totalcount)
+```
+
+```{python}
+print(f'There are {query.totalcount} query results.')
+```
+
+```{python}
+### put query results into dataframe
+query_results = pd.DataFrame(query.result)
+print(f'Total length of data frame query_results is {len(query_results)}.')
+```
+
+```{python}
+query_results
+```
+
+## How to query PANGAEA without result limitations
+
+-   The maximum of retrieving search results is 500 datasets.
+-   Retrieve datasets in chunks of 500 via offset option.
+-   Put all datasets in one data frame.
+
+```{python}
+### Get all results and combine them in data frame.
+
+### define search pattern
+search_pattern = 'project:label:PAGES_C-PEAT'
+
+### basic query to get number of search results
+query = pan.PanQuery(search_pattern, limit = 500)
+print(f'There are {query.totalcount} query results.')
+print(f'Currently query consists of {len(query.result)} entries.')
+
+### create empty data frame
+df_query_results_all = pd.DataFrame()
+
+### loop over all results in steps of 500
+for i in np.arange(0,query.totalcount,500):
+    
+    ### store result of individual step in qs
+    qs = pan.PanQuery(search_pattern, limit = 500, offset=i)
+    
+    ### convert qs result with 500 entries to data frame df_qs
+    df_qs = pd.DataFrame(qs.result)
+    
+    ### concatenate all individual df_qs into one data frame named query_results_all
+    df_query_results_all = pd.concat([df_query_results_all,df_qs],ignore_index=True)
+    
+print(f'df_query_results_all consists of {len(df_query_results_all)} results.')
+```
+
+show first and last 3 lines
+
+```{python}
+pd.concat( [ df_query_results_all.head(3), df_query_results_all.tail(3) ] )
+```
+
+## 3. Get metadata of datasets
+
+A long list of metadata is callable with PanDataSet. Find a comprehensive list in internal documentation\
+*help(pan.PanQuery)*\
+or in this notebook full of examples: [pangaeapy_detailed_metadata_search.ipynb](https://github.com/pangaea-data-publisher/community-workshop-material/tree/master/Python/PANGAEApy_practical/pangaeapy_detailed_metadata_search.ipynb)
+
+```{python}
+### 3 ways to ask for dataset metadata
+## complete URL
+# ds = PanDataSet('https://doi.pangaea.de/10.1594/PANGAEA.918423', include_data=False) 
+## just URI
+# ds = PanDataSet('doi:10.1594/PANGAEA.918423', include_data=False)
+## just PANGAEA id number of dataset
+ds = PanDataSet(918423, include_data=False) 
+```
+
+### Basic metadata retrieval
+
+```{python}
+### Title
+ds.title
+```
+
+```{python}
+### Abstract
+ds.abstract
+```
+
+```{python}
+### Authors
+print(f'Authors: {"; ".join([x.fullname for x in ds.authors])}')
+```
+
+```{python}
+### Full Reference
+ds.citation
+```
+
+```{python}
+### Geolocation
+print(f'Latitude: {ds.geometryextent["meanLatitude"]}')
+print(f'Longitude: {ds.geometryextent["meanLongitude"]}')
+
+```
+
+```{python}
+### Parameters
+params = "; ".join([f'{param.name} [{param.unit}]' if param.unit else param.name for param in ds.params.values()])
+print(f'Parameters: {params}')
+```
+
+```{python}
+### Event as dataframe
+ds.getEventsAsFrame()
+```
+
+```{python}
+### Event as PanEvent object
+print(ds.events)
+
+for event in ds.events:
+    print(event.label)
+    # print(event.method.name)
+    print(event.basis.name)
+```
+
+### Store metadata in data frame
+
+```{python}
+### create empty data frame
+df = pd.DataFrame()
+
+### store metadata in df
+df.loc[0,'dataset title'] = ds.title
+df.loc[0,'abstract'] = ds.abstract
+
+### ds.authors is a list
+df.loc[0,'first author fullname'] = ds.authors[0].fullname
+df.loc[0,'all authors fullnames'] = "; ".join([x.fullname for x in ds.authors])
+
+### authors orcids is a list
+df.loc[0,'all authors orcids'] = "; ".join([x.ORCID if x.ORCID else "no ORCID" for x in ds.authors])
+
+df.loc[0,'citation'] = ds.citation
+df.loc[0,'dataset DOI'] = ds.doi
+df.loc[0,'west bound longitude'] = ds.geometryextent["westBoundLongitude"]
+df.loc[0,'east bound longitude'] = ds.geometryextent["eastBoundLongitude"]
+df.loc[0,'south bound latitude'] = ds.geometryextent["southBoundLatitude"]
+df.loc[0,'north bound latitude'] = ds.geometryextent["northBoundLatitude"]
+### parameters is a list
+df.loc[0,'parameters'] = "; ".join([f'{param.name} [{param.unit}]' if param.unit else param.name for param in ds.params.values()])
+
+### event devices
+df.loc[0,'label'] = "; ".join(set([device for device in ds.getEventsAsFrame()["label"]]))
+```
+
+Turn the python data frame to R data frame
+
+| Action                    | Command                        |
+|---------------------------|--------------------------------|
+| Convert Python DF to R    | `r_df <- as.data.frame(py$df)` |
+| Convert R DF to Python    | `py_df <- r_to_py(r_df)`       |
+| Access Python Object in R | `py$df`                        |
+
+```{r}
+r_df <- as.data.frame(py$df)
+```
+
+
+### Multiple datasets

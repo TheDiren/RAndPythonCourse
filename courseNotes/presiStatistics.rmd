@@ -1,0 +1,807 @@
+---
+title: "Programming for Data Analysis and Statistics with R"
+subtitle: "(Informatica Feminale 2023)"
+author: Diren Senger
+date: August 2023
+output: ioslides_presentation
+---
+
+
+# Piping
+
+## The basic piping operator
+```{r}
+library(magrittr)
+x <- 9
+# Calculate the square-root of x
+sqrt(x)
+
+# Calculate it using pipes
+x %>% sqrt
+
+```
+
+
+## Updating x
+
+```{r}
+x <- 9
+# Calculate the square-root of x and update x
+x <- sqrt(x)
+x
+
+# Calculate it using pipes
+x <- 9
+x %<>% sqrt
+x
+```
+
+## real-world example
+
+```{r}
+
+df <- read.csv("beedata.csv")
+
+nrow(subset(df, hive==4))
+
+df %>% subset(hive==4) %>% nrow
+
+```
+
+## Exercises - Piping
+
+```{r}
+# Exercises - Piping
+
+# 1. Rewrite the following code using %>% and %<>%:
+
+x <- 2
+round(log(x))
+
+
+# 2. Rewrite the second line of following code:
+
+x <- rnorm(10,100)
+round(sum(sqrt(x)), 3)
+```
+
+## Solution 1
+
+```{r}
+
+x <- 2
+round(log(x))
+
+
+x <- 2
+x %>% log %>% round
+```
+
+## Solution 2
+
+```{r}
+# 2. Rewrite the second line of following code:
+
+x <- rnorm(10,100)
+round(sum(sqrt(x)), 3)
+
+x %>% sqrt %>% sum %>% round(3)
+```
+
+
+## The penguin data set
+
+![](images/penguins.png){width=75%} Artwork by @allison_horst
+
+Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. R package version 0.1.0. https://allisonhorst.github.io/palmerpenguins/. doi: 10.5281/zenodo.3960218.
+
+
+## Penguins in R
+
+<https://allisonhorst.github.io/palmerpenguins/>
+
+```{r}
+library(palmerpenguins)
+head(penguins)
+```
+
+## Python
+
+<https://github.com/mcnakhaee/palmerpenguins?tab=readme-ov-file>
+
+```{python}
+from palmerpenguins import load_penguins
+
+penguins = load_penguins()
+penguins.head()
+```
+
+## Penguins
+
+```{r echo=F}
+library(knitr)
+kable(penguins)
+```
+
+
+
+## How are they related?
+
+```{r mass-flipper, warning = FALSE, message = FALSE, echo = FALSE, out.width='90%', fig.retina=2}
+library(ggplot2)
+mass_flipper <- ggplot(data = penguins, 
+                       aes(x = flipper_length_mm,
+                           y = body_mass_g)) +
+  geom_point(aes(color = species, 
+                 shape = species),
+             size = 3,
+             alpha = 0.8) +
+  theme_minimal() +
+  scale_color_manual(values = c("darkorange","purple","cyan4")) +
+  labs(title = "Penguin size, Palmer Station LTER",
+       subtitle = "Flipper length and body mass for Adelie, Chinstrap, and Gentoo Penguins",
+       x = "Flipper length (mm)",
+       y = "Body mass (g)",
+       color = "Penguin species",
+       shape = "Penguin species") +
+  theme(legend.position = c(0.2, 0.7),
+        plot.title.position = "plot",
+        plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.caption.position = "plot")
+
+mass_flipper
+```
+
+
+## First Step: Look at your data (Descriptive Statistics)
+
+-   What is your response variable?
+-   Plot your data
+    -   Plot raw data
+    -   Frequency distribution -\> Are there any patterns?
+
+
+# Linear Models
+
+## Definition - Simple Linear Regression
+
+$$
+\begin{equation}
+y_i = \beta_0 + \beta_1x_i  + \epsilon_i, \qquad   i=1,...,n
+\end{equation}
+$$
+where $y$ is the dependent variable, $x$ is the independent variable (also called explanatory variable),  $\beta_0$ is the intercept parameter, $\beta_1$ is the slope parameter and $\epsilon\sim N(0,\sigma^2)$ is the error coefficient.
+
+## Sample data
+
+```{r}
+set.seed(123)
+x <- seq(0,5,0.1) 
+y <- x + rnorm(length(x))
+plot(x, y)
+
+```
+
+## Fitting a Linear Model
+
+```{r}
+mod <- lm(y~x)
+summary(mod)
+plot(x,y)
+abline(reg = mod)
+```
+
+## The p-value
+
+Our hypothesis is that there is no relationship between the variables.
+The p-value expresses the probability of this hypothesis.
+If our p-value is very small, it is very unlikely, that this hypothesis is true and we have a statistical significant relationship between the variables.
+
+## Linear Model - Assumptions
+
+- Linear relationship between x and y
+- Independence of residuals
+- Constant variance of residuals
+- Normality: Residuals are normally distributed
+
+
+
+## Overall check for assumptions - 1
+
+```{r}
+plot(mod, which=1)
+```
+
+## Overall check for assumptions - 1
+
+- 1st graph: Constancy of variance
+- Plot of the residuals against the fitted values
+- Should look like the sky at night
+        
+## Overall check for assumptions - 2
+
+```{r}
+plot(mod, which=2)
+```
+
+## Overall check for assumptions - 2
+
+- 2nd graph: Normality of errors
+
+- Normal QQ plot = plot of the ordered residuals against the fitted values 
+- Should be a reasonably straight line
+
+## Overall check for assumptions
+
+```{r}
+plot(mod, which=3)
+```
+
+## Overall check for assumptions
+
+```{r}
+plot(mod, which=4)
+```
+
+
+
+
+
+
+## Assumption 1 - Linear Relationship
+
+- use a scatterplot to check
+- if this assumption is violated we have unrealistic predictions and estimates of the standard deviation
+- How to deal with this? You can transform the variables or alter the model.
+
+## Assumption 1 - Linear Relationship
+```{r}
+plot(x,y)
+```
+
+## Assumption 2 - Independence of Residuals
+
+- Plot residuals in time/ observation order / based on observation location / ...
+- You expect that they are equally scattered around 0 
+- You can also use the Durban-Watson-Test
+- Autocorrelation can have serious effects on the model
+- You can add an AR correlation term to the model. Sometimes it also helps to add a further covariate.
+
+## Assumption 2 - Independence of Residuals
+```{r}
+res <- residuals(mod)
+plot(x, res)
+```
+
+## Durban-Watson-Test
+- H0: There is no correlation among the residuals.
+
+- HA: The residuals are autocorrelated.
+
+```{r}
+library(car)
+durbinWatsonTest(mod)
+```
+
+- The p-value is larger than 0.05, so we cannot reject the null hypothesis that there is no correlation between residuals.
+
+## Assumption 3 - Constant variance or errors
+- Plot fitted values vs residuals
+- You expect that they are equally scattered around 0 
+
+## Assumption 3 - Constant variance or errors
+```{r}
+plot(fitted(mod),res)
+```
+
+## Assumption 4 - Normality of Residuals
+
+- Use qq-plot to compare quantiles.
+- Or use the Shapiro-Wilk-Test
+- If you do not find a Normal Distribution, check for outliers or transform your variable.
+
+## Assumption 4 - Normality of Residuals
+```{r}
+qqPlot(res)
+```
+
+## Shapiro-Wilk-Test for Normality
+
+- H0: The data is normally distributed
+- HA: The data comes from an other distribution
+
+```{r}
+shapiro.test(res)
+```
+- We cannot reject the null-hypothesis that the data is normally distributed. 
+
+## If model doesn’t seem to fit your data...
+
+## Is your response really continuous?
+
+If not another model might be more appropriate: 
+
+- Continuous: linear model → LM e.g. height, weight 
+- Count: Poisson model → GLM e.g. number of individuals 
+- Binary: Binomial model → GLM e.g. presence / absence
+
+## Are there obvious patterns?
+
+For example many zeros: 
+
+You could separate in two analyses: Binomial model for success / failure and linear model for successes
+
+## Are there outliers that should be omitted?
+
+4th graph of plot(model): 
+Plot of Cook´s distances versus raw data → Highlights the identity of particularly influential data points
+
+## Relationship not a straight line?
+
+Polynomial regression e.g. a quadratic function might be an option
+
+```{r eval=F}
+ lm(y ~ x + I(x^2))
+```
+
+## Transformation
+
+You could for example use a log transformation of the response variable
+
+```{r eval=FALSE}
+	lm(log(y) ~ x)
+```
+
+## Are there other explanatory variables that you should include?
+
+
+## Definition - Linear Model with multiple predictors
+
+$$\begin{equation}\label{eqn:linearregression}
+y_i = \beta_0 + \beta_1x_{1,i} + ... + \beta_px_{p,i} + \epsilon_i, \qquad   i=1,...,n
+\end{equation}$$
+where $y$ is the dependent variable, $x_1 ... x_p$ are the independent variables (also called explanatory variables),  $\beta_0 ... \beta_p$ are the regression coefficients, $\epsilon\sim N(0,\sigma^2)$ is the error coefficient  and $p \geq 1$.
+
+
+
+
+# Plotting
+
+## Plotting
+
+- many, many libraries
+- we are going to look at base, ggplot and plotly
+
+## A basic plot (Standard library)
+
+```{r include=F}
+df <- read.csv("beedata.csv")
+df$timeSeconds <- df$time/1000000000
+df$time <- as.POSIXct(df$timeSeconds, origin="1970-01-01")
+```
+
+
+```{r}
+df.4 <- df[df$hive==4,]
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3)
+```
+
+## Improving (Standard library)
+
+```{r}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim=c(0,40)) # added this
+```
+
+## Improving (Standard library)
+
+```{r eval=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     xlab = "Time (2019)",  # added this
+     ylab = "Temperature within hive", # added this
+     main = "Sensor measurements") # added this
+
+```
+
+## Improving (Standard library)
+
+```{r echo=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     xlab = "Time (2019)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+
+```
+
+## Improving (Standard library)
+
+```{r eval=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b", # added this
+     lty = 1, # added this
+     xlab = "Time (2019)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+
+```
+
+## Points or Lines? (type)
+
+- “p”: Points
+- “l”: Lines
+- “b”: Both
+
+## Line type (lty)
+
+![](images/linetypes.png){width=50%}
+
+Source: [http://www.sthda.com/english/wiki/line-types-in-r-lty](http://www.sthda.com/english/wiki/line-types-in-r-lty)
+
+
+## Improving (Standard library)
+
+```{r echo=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     xlab = "Time (2019)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+
+```
+
+## Improving (Standard library)
+
+```{r eval = F}
+df.4 <- df.4[df.4$t_i_3>5&df.4$t_i_3<40,] # added this
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     xlab = "Time (2019)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+
+```
+
+## Improving (Standard library)
+
+```{r echo=F}
+df.4 <- df.4[df.4$t_i_3>5&df.4$t_i_3<40,]
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     xlab = "Time (2019)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+
+```
+
+
+
+
+## Improving (Standard library)
+
+```{r eval=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     pch = 4, # added this
+     xlab = "Time (2019)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+```
+
+## Improving (Standard library)
+
+```{r echo=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     pch = 4, # added this
+     xlab = "Time (2019)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+```
+
+
+## Point types (pch)
+![](images/dottypes.png){width=50%}
+
+Source: [http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r](http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r)
+
+
+## Improving (Standard library)
+
+```{r eval=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     pch = 4,
+     xlim = as.POSIXct(c("2019-08-08", "2019-08-09")), # added this
+     xlab = "Time (2019-08-08)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+
+```
+
+## Improving (Standard library)
+
+```{r echo=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     pch = 4,
+     xlim = as.POSIXct(c("2019-08-08", "2019-08-09")),
+     xlab = "Time (2019-08-08)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+
+```
+
+## Improving (Standard library)
+
+```{r eval=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     pch = 4,
+     xlim = as.POSIXct(c("2019-08-08", "2019-08-09")),
+     xlab = "Time (2019-08-08)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements",
+     xaxt="n")
+axis.POSIXct(1, 
+             at=seq(min(df.4$time), max(df.4$time), by="1 hour"), 
+             format="%H:00") # added this
+
+```
+
+
+## Improving (Standard library)
+
+```{r echo=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     pch = 4,
+     xlim = as.POSIXct(c("2019-08-08", "2019-08-09")),
+     xlab = "Time (2019-08-08)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements",
+     xaxt="n")
+axis.POSIXct(1, at=seq(min(df.4$time), max(df.4$time), by="1 hour"), format="%H:00")
+
+```
+
+
+
+
+
+
+
+## Even more complex (Standard library)
+
+```{r eval=F}
+# subset data
+df.4 <- df[df$hive==4,]
+# plot temperature outside
+plot(df.4$time, df.4$t_o, ylim=c(0,40),type = 'p', pch=4)
+# choose colours
+cl <- rainbow(5)
+# choose colums
+cols <- 4:8
+# plot each column
+for (i in 1:5){
+    lines(df.4$time, 
+          df.4[,cols[i]],
+          col = cl[i],
+          type = 'p', 
+          pch=4, 
+          ylim=c(0,40))
+}
+# add legend
+legend("topright", legend=c(1, 2, 3, 4, 5, "outside"),
+       col=c(cl, "black"), pch = 4, lty = 0, cex=0.8)
+```
+
+## Even more complex (Standard library)
+
+```{r eval=F}
+# add legend
+legend("topright", legend=c(1, 2, 3, 4, 5, "outside"),
+       col=c(cl, "black"), pch = 4, lty = 0, cex=0.8)
+```
+
+## Even more complex (Standard library)
+
+```{r echo=F}
+# subset data
+df.4 <- df[df$hive==4,]
+# plot temperature outside
+plot(df.4$time, df.4$t_o, ylim=c(0,40),type = 'p', pch=4)
+# choose colours
+cl <- rainbow(5)
+# choose colums
+cols <- 4:8
+# plot each column
+for (i in 1:5){
+    lines(df.4$time, df.4[,cols[i]],col = cl[i],type = 'p', pch=4, ylim=c(0,40))
+}
+# add legend
+legend("topright", legend=c(1, 2, 3, 4, 5, "outside"),
+       col=c(cl, "black"), pch = 4, lty = 0, cex=0.8)
+```
+
+## basic plot (ggplot)
+
+```{r}
+# plot data
+library(ggplot2)
+ggplot(data = df.4, aes(x=time, y=t_i_3)) + geom_point()
+```
+
+## improving (ggplot)
+
+```{r eval=F}
+# plot data
+library(ggplot2)
+ggplot(data = df.4, aes(x=time, y=t_i_3)) + geom_point(shape=4) + 
+  ylim(c(0, 40)) + 
+  xlab("Time (2019") + 
+  ylab("Temperature within hive") + 
+  ggtitle("Sensor measurements")
+```
+## improving (ggplot)
+
+```{r echo=F}
+# plot data
+library(ggplot2)
+ggplot(data = df.4, aes(x=time, y=t_i_3)) + geom_point(shape=4) + 
+  ylim(c(0, 40)) + 
+  xlab("Time (2019") + 
+  ylab("Temperature within hive") + 
+  ggtitle("Sensor measurements")
+```
+
+
+## more complex (ggplot)
+
+```{r eval =F}
+# subset data
+df.4 <- df[df$hive==4,]
+# choose columns
+df.4.cols <- df.4[,c(1,4:9)]
+# reshape data
+library(reshape)
+mdf <- melt(df.4.cols, id=c("time")) 
+# plot data
+library(ggplot2)
+ggplot(data = mdf, aes(x=time, y=value)) + 
+  geom_line(aes(colour=variable)) + 
+  ylim(c(0, 40))
+```
+
+## more complex (ggplot)
+
+```{r echo=F, message = FALSE}
+# subset data
+df.4 <- df[df$hive==4,]
+# choose columns
+df.4.cols <- df.4[,c(1,4:9)]
+# reshape data
+library(reshape)
+mdf <- melt(df.4.cols, id=c("time")) 
+# plot data
+library(ggplot2)
+ggplot(data = mdf, aes(x=time, y=value)) + 
+  geom_line(aes(colour=variable)) + 
+  ylim(c(0, 40))
+```
+
+## Basic plot (plotly)
+
+```{r eval = F}
+library(plotly)
+fig <- plot_ly(df.4[1:100,], x = ~time, y = ~t_i_3)
+fig
+
+```
+
+## Basic plot (plotly)
+
+```{r echo = F, message = FALSE}
+library(plotly)
+fig <- plot_ly(df.4[1:100,], x = ~time, y = ~t_i_3)
+fig
+
+```
+
+## How to save plotly plots
+
+```{r}
+p <- plot_ly(df.4[1:100,], x = ~time, y = ~t_i_3)
+# saving the plot as html
+htmlwidgets::saveWidget(p, "testploty.html")
+# if you want to have a static image, e.g. png, you can then open the html file, and use the small button with the camera symbol to export as png. You could also use the library orca to directly export a static image using plotly directly from your code, but it seems to be a bit complicated to install orca.
+# I haven't used powerpoint for a long time, but I think there should be a way to embed a html file: https://www.techwalla.com/articles/how-to-embed-an-excel-workbook-icon-into-powerpoint
+```
+
+
+## Saving your plot
+```{r eval=F}
+png("test.png")
+plot(hist(rnorm(100)))
+dev.off()
+```
+
+
+# Assignment
+
+## Assignment
+
+- you all get a confirmation of participation
+- you can submit a small assignment for 1 CP
+
+
+## Assignment
+
+-   you can choose if you want to use R or Python
+-   Create a markdown document/ Jupyther Notebook
+-   Choose a dataset from PANGEA
+- Think about the following question: What do you want fo find out? What is the motivation for your analysis?
+- Choose 5 of the following tasks. You can also come up with own ideas.
+- Write a short text for each task explaining what you have been doing
+
+
+## Ideas
+
+- Make some exploratory analysis:
+    + print the mean/ median/ standard deviation for each column
+    + print the total number of missing values
+    + print the number of missing values for each column
+- Transform some of the columns/ Create new columns based on existing ones
+- Create a subset of your data
+- Exclude all rows with missing values
+- Create a plot
+- Write a function that takes a filename and some additional parameters. The function should create a plot and save it as “png” with that filename
+- Create a linear model
+
+## Assignment
+
+- If you want to do an assignment, please send me an e-mail:
+
+- "I want to do an assignment.""
+- "I do not want a grade on my certificate. / I want to have a grade on my certificate./
+I want to have a grade if it is better than <1.3, 1.7, 2.0, 2.3, 2.7, 3.0, ...>"
+
+## Deadline
+
+- Suggestion for deadline: ?
+
+# Enjoy R and Python ;)
